@@ -1,6 +1,0 @@
-name: Internet Weather Temperature
-unique_id: template_weather_temperature
-state: "{{ state_attr('weather.forecast_home', 'temperature') }}"
-unit_of_measurement: "°C"
-device_class: temperature
-state_class: measurement

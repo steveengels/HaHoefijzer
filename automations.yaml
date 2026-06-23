@@ -1,0 +1,550 @@
+- alias: Airco Bureau - Start koelen boven 25°C
+  id: airco_bureau_startkoelen
+  description: Start de airco op koelen bij 23°C als het warmer is dan 25°C en start een timer van 30 minuten
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.aircobureau_climatecontrol_room_temperature
+      above: 25
+    - platform: time_pattern
+      minutes: "/15"
+
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.aircobureau_climatecontrol_room_temperature
+      above: 25
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: climate.aircobureau_room_temperature
+          state: "cool"
+    - condition: time
+      after: "07:00:00"
+      before: "23:00:00"
+
+  action:
+    - service: climate.set_temperature
+      target:
+        entity_id: climate.aircobureau_room_temperature
+      data:
+        temperature: 23
+        hvac_mode: cool
+
+    - service: timer.start
+      data:
+        duration: "00:30:00"
+      target:
+        entity_id: timer.timer_airco_bureau_koelen
+
+  mode: single
+- alias: Airco Bureau - Stop koelen na 30 minuten
+  id: airco_bureau_stopkoelen
+  description: Zet de airco uit wanneer de 30-minuten timer verloopt
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.timer_airco_bureau_koelen
+
+  action:
+    - service: climate.set_hvac_mode
+      target:
+        entity_id: climate.aircobureau_room_temperature
+      data:
+        hvac_mode: "off"
+
+  mode: single
+- alias: Airco Slaapkamer - Start koelen boven 25°C
+  id: airco_slaapkamer_startkoelen
+  description: Start de airco op koelen bij 23°C als het warmer is dan 25°C en start een timer van 30 minuten
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.aircoslaapkamer_climatecontrol_room_temperature
+      above: 25
+    - platform: time_pattern
+      minutes: "/15"
+
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.aircoslaapkamer_climatecontrol_room_temperature
+      above: 25
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: climate.aircoslaapkamer_room_temperature
+          state: "cool"
+    - condition: time
+      after: "21:00:00"
+      before: "23:59:59"
+
+  action:
+    - service: climate.set_temperature
+      target:
+        entity_id: climate.aircoslaapkamer_room_temperature
+      data:
+        temperature: 23
+        hvac_mode: cool
+
+    - service: timer.start
+      data:
+        duration: "00:30:00"
+      target:
+        entity_id: timer.timer_airco_slaapkamer_koelen
+
+  mode: single
+- alias: Airco Slaapkamer - Stop koelen na 30 minuten
+  id: airco_slaapkamer_stopkoelen
+  description: Zet de airco uit wanneer de 30-minuten timer verloopt
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.timer_airco_slaapkamer_koelen
+
+  action:
+    - service: climate.set_hvac_mode
+      target:
+        entity_id: climate.aircoslaapkamer_room_temperature
+      data:
+        hvac_mode: "off"
+
+  mode: single
+- alias: Airco Woonkamer - Start koelen boven 25°C
+  id: airco_woonkamer_startkoelen
+  description: Start de airco op koelen bij 23°C als het warmer is dan 25°C en start een timer van 30 minuten
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.aircowoonkamer_climatecontrol_room_temperature
+      above: 25
+    - platform: time_pattern
+      minutes: "/15"
+
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.aircowoonkamer_climatecontrol_room_temperature
+      above: 25
+    - condition: not
+      conditions:
+        - condition: state
+          entity_id: climate.aircowoonkamer_room_temperature
+          state: "cool"
+    - condition: time
+      after: "07:00:00"
+      before: "23:00:00"
+
+  action:
+    - service: climate.set_temperature
+      target:
+        entity_id: climate.aircowoonkamer_room_temperature
+      data:
+        temperature: 23
+        hvac_mode: cool
+
+    - service: timer.start
+      data:
+        duration: "00:30:00"
+      target:
+        entity_id: timer.timer_airco_woonkamer_koelen
+
+  mode: single
+- alias: Airco Woonkamer - Stop koelen na 30 minuten
+  id: airco_woonkamer_stopkoelen
+  description: Zet de airco uit wanneer de 30-minuten timer verloopt
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.timer_airco_woonkamer_koelen
+
+  action:
+    - service: climate.set_hvac_mode
+      target:
+        entity_id: climate.aircowoonkamer_room_temperature
+      data:
+        hvac_mode: "off"
+
+  mode: single
+- alias: Ventilatie tuinhuis schema
+  id: ventilate_garden_shed_schedule
+  description: Ventilate the shed for 15 minutes if temp is > 15°C or the sensor is unavailable.
+  trigger:
+    # Trigger : Every hour
+    - platform: time_pattern
+      minutes: 0
+
+  condition:
+    - condition: or
+      conditions:
+        # Condition: Temp > 15°C
+        - condition: numeric_state
+          entity_id: sensor.aircowoonkamer_climatecontrol_outdoor_temperature
+          above: 15
+
+        # Condition: Sensor unavailable or unknown
+        - condition: state
+          entity_id: sensor.aircowoonkamer_climatecontrol_outdoor_temperature
+          state:
+            - "unavailable"
+            - "unknown"
+
+    # Only allow between 11:00 and 23:00 or exactly at 06:00
+    - condition: or
+      conditions:
+        - condition: time
+          after: "10:59:00"
+          before: "23:01:00"
+        - condition: time
+          after: "05:59:00"
+          before: "06:01:00"
+
+  action:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.shellyventilatorswitch
+
+    - service: timer.start
+      target:
+        entity_id: timer.timer_tuinhuis_ventilatie
+
+  mode: single
+- alias: Ventilatie tuinhuis uit na timer
+  id: ventilate_garden_shed_stop_after_timer
+  description: Turn off the shed ventilation when the 15-minute timer finishes.
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.timer_tuinhuis_ventilatie
+  action:
+    - service: switch.turn_off
+      target:
+        entity_id: switch.shellyventilatorswitch
+
+  mode: single
+- alias: Alarm aan nacht
+  id: alarm_aan_nacht
+  description: Automatically arm the alarm every day after 00:00
+  trigger:
+  - platform: time
+    at: 00:00:00
+  condition: []
+  action:
+  - service: alarm_control_panel.alarm_arm_away
+    data: {}
+    target:
+      device_id: d295219210dafad22c2a16a886a069d6
+  mode: single
+- alias: Alarm aan verlaten woning
+  id: alarm_aan_verlaten_woning
+  description: Arm the alarm when everyone leaves home
+  trigger:
+    - platform: zone
+      entity_id: device_tracker.steveengels
+      zone: zone.home
+      event: leave
+    - platform: zone
+      entity_id: device_tracker.oppo_a91
+      zone: zone.home
+      event: leave
+
+  condition:
+    # Only arm if BOTH devices are not home
+    - condition: state
+      entity_id: device_tracker.steveengels
+      state: not_home
+    - condition: state
+      entity_id: device_tracker.oppo_a91
+      state: not_home
+
+  action:
+    - service: alarm_control_panel.alarm_arm_away
+      data: {}
+      target:
+        device_id: d295219210dafad22c2a16a886a069d6
+
+  mode: single
+- alias: Alarm uit betreden woning
+  id: alarm_uit_betreden_woning
+  description: Disarm the alarm when either device arrives home
+  trigger:
+  - platform: zone
+    entity_id: device_tracker.steveengels
+    zone: zone.home
+    event: enter
+  - platform: zone
+    entity_id: device_tracker.oppo_a91
+    zone: zone.home
+    event: enter
+  condition:
+  - condition: not
+    conditions:
+    - condition: time
+      after: 00:00:00
+      before: 07:00:00
+  - condition: or
+    conditions:
+    - condition: state
+      entity_id: device_tracker.steveengels
+      state: home
+    - condition: state
+      entity_id: device_tracker.oppo_a91
+      state: home
+  action:
+  - service: alarm_control_panel.alarm_disarm
+    data: {}
+    target:
+      device_id: d295219210dafad22c2a16a886a069d6
+  mode: single
+- alias: Alarm uit ochtend
+  id: alarm_uit_ochtend
+  description: Disarm the alarm after 7:00
+  trigger:
+  - platform: time
+    at: 07:00:00
+  condition: []
+  action:
+  - service: alarm_control_panel.alarm_disarm
+    data: {}
+    target:
+      device_id: d295219210dafad22c2a16a886a069d6
+  mode: single
+- alias: Laadpaal vermogen verlagen
+  id: laadpaal_vermogen_verlagen
+  description: Verlaag het laadvermorgen van de laadpaal vanaf 18u, of wanneer de Jacuzzi actief is
+  triggers:
+    - at: "18:00"
+      trigger: time
+    - platform: state
+      entity_id: binary_sensor.hoefijzer_spa_in_use
+      to: "on"
+  action:
+    - service: number.set_value
+      target:
+        entity_id:
+          - number.laadpaal_max_station_current
+          - number.laadpaal_power_connector_external_max_current_socket_1
+          - number.laadpaal_power_connector_max_current_socket_1
+      data:
+        value: 8
+    - service: timer.start
+      target:
+        entity_id: timer.timer_jacuzzi
+  mode: restart
+
+- alias: Laadpaal vermogen verhogen
+  id: laadpaal_vermogen_verhogen
+  description: Verhoog het laadvermorgen van de laadpaal vanaf 00:00, of wanneer de Jacuzzi niet actief is
+  triggers:
+    - platform: time
+      at: "00:00"
+    - platform: state
+      entity_id: binary_sensor.hoefijzer_spa_in_use
+      to: "off"
+    - platform: state
+      entity_id: timer.timer_jacuzzi
+      to: "idle"
+  condition:
+    - condition: state
+      entity_id: binary_sensor.hoefijzer_spa_in_use
+      state: "off"
+    - condition: state
+      entity_id: timer.timer_jacuzzi
+      state: "idle"
+    - condition: time
+      before: "18:00"
+  action:
+    - service: number.set_value
+      target:
+        entity_id:
+          - number.laadpaal_max_station_current
+          - number.laadpaal_power_connector_external_max_current_socket_1
+          - number.laadpaal_power_connector_max_current_socket_1
+      data:
+        value: 16
+  mode: restart
+- alias: Licht woonkamer aan
+  id: licht_woonkamer_aan
+  description: Doe het licht aan met de Ikea schakelaar voor toestellen in de huiskamer
+  trigger:
+  - device_id: 2eb5d8ea34280746cea4f1006c0bd42d
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_on
+  condition: []
+  action:
+    - service: light.turn_on
+      target:
+        entity_id:
+          - light.boekenkastlinks
+          - light.boekenkastrechts
+          - light.marmergarage
+          - light.keuken
+          - light.marmerwoonkamer
+    - service: switch.turn_on
+      target:
+        entity_id:
+          - switch.garage
+          - switch.garagestopcontact_schakelaar
+          - switch.shelly_licht_tuin_switch_0
+
+  mode: single
+- alias: Licht aan zonsondergang
+  id: licht_aan_zonondergang
+  description: 'Licht aan bij zonsondergang '
+  triggers:
+  - event: sunset
+    offset: 0
+    trigger: sun
+  conditions: []
+  actions:
+  - action: light.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id:
+      - light.boekenkastlinks
+      - light.boekenkastrechts
+      - light.keuken
+      - light.marmerwoonkamer
+      - light.marmergarage
+  - action: switch.turn_on
+    metadata: {}
+    data: {}
+    target:
+      entity_id: switch.garagestopcontact_schakelaar
+  mode: single
+- alias: Licht aan zonsopgang
+  id: licht_aan_zonsopgang
+  description: Licht aan als de zon nog niet is opgekomen om 07:00
+  triggers:
+  - at: 07:00:00
+    trigger: time
+  conditions:
+  - condition: sun
+    before: sunrise
+  actions:
+  - target:
+      entity_id: light.boekenkastlinks
+    service: light.turn_on
+  mode: single
+- alias: Licht woonkamer uit
+  id: licht_woonkamer_uit
+  description: Doe het licht uit met de Ikea schakelaar voor toestellen in de huiskamer
+  trigger:
+  - device_id: 2eb5d8ea34280746cea4f1006c0bd42d
+    domain: zha
+    platform: device
+    type: remote_button_short_press
+    subtype: turn_off
+  condition: []
+  action:
+    - service: light.turn_off
+      target:
+        entity_id:
+          - light.boekenkastlinks
+          - light.boekenkastrechts
+          - light.marmergarage
+          - light.keuken
+          - light.marmerwoonkamer
+    - service: switch.turn_off
+      target:
+        entity_id:
+          - switch.garage
+          - switch.garagestopcontact_schakelaar
+          - switch.shelly_licht_tuin_switch_0
+
+  mode: single
+- alias: Licht uit zonsopgang
+  id: licht_uit_zonsopgang
+  description: Licht uit na zonsopgang
+  triggers:
+  - at: 08:00:00
+    trigger: time
+  actions:
+  - target:
+      entity_id: light.boekenkastlinks
+    service: light.turn_off
+  mode: single
+- alias: Licht uit middernacht
+  id: licht_uit_middernacht
+  description: Licht uitzetten middernacht als de TV uit is, probeer tot 4 uur
+  trigger:
+    - platform: time
+      at: "00:00:00"
+    - platform: time_pattern
+      minutes: "/30"
+    - platform: time
+      at: "04:00:00"
+
+  condition:
+    - condition: time
+      after: "00:00:00"
+      before: "04:01:00"
+    - condition: template
+      value_template: >
+        {{ states('media_player.lg_webos_smart_tv') in ['off', 'unavailable'] }}
+
+  action:
+    - service: light.turn_off
+      target:
+        entity_id:
+          - light.boekenkastlinks
+          - light.boekenkastrechts
+          - light.marmergarage
+          - light.keuken
+          - light.marmerwoonkamer
+    - service: switch.turn_off
+      target:
+        entity_id:
+          - switch.garage
+          - switch.garagestopcontact_schakelaar
+          - switch.shelly_licht_tuin_switch_0
+
+  mode: single
+- alias: Licht tuin aan na aanzetten Jacuzzi
+  id: licht_tuin_aan_jacuzzi
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.hoefijzer_spa_in_use
+      to: "on"
+
+  condition:
+    - condition: sun
+      after: sunset
+
+  action:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.shelly_licht_tuin_switch_0
+
+  mode: single
+- alias: Licht tuin uit 10 minuten na uitzetten Jacuzzi
+  id: licht_tuin_uit_jacuzzi
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.hoefijzer_spa_in_use
+      to: "off"
+
+  action:
+    - service: timer.start
+      target:
+        entity_id: timer.timer_tuinlicht_jacuzzi
+
+  mode: restart
+- alias: Licht tuin uit na Jacuzzi timer
+  id: licht_tuin_uit_jacuzzi_timer
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.timer_tuinlicht_jacuzzi
+  condition:
+    - condition: state
+      entity_id: binary_sensor.hoefijzer_spa_in_use
+      state: "off"
+  action:
+    - service: switch.turn_off
+      target:
+        entity_id: switch.shelly_licht_tuin_switch_0
+
+  mode: single

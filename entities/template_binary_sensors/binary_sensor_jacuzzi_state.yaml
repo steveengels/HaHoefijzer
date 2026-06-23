@@ -1,6 +1,0 @@
-name: binary_sensor_jacuzzi_state
-unique_id: binary_sensor_jacuzzi_state
-device_class: running
-state: >
-  {{ is_state('fan.hoefijzer_pump_1', 'on') or
-     is_state('fan.hoefijzer_pump_2', 'on') }}

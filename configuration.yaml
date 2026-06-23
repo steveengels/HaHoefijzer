@@ -13,18 +13,38 @@ homeassistant:
   unit_system: metric
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: Europe/Brussels
-  # Load packages
-  packages: !include_dir_named integrations
-
-#timer: !include_dir_merge_named ../entities/timers
-
-#input_select: !include_dir_named entities/input_selects
-
-#automation: !include_dir_named entities/automations
-
-#script: !include_dir_named entities/scripts
 
 frontend:
   themes: !include_dir_named themes
 
 api:
+
+automation: !include automations.yaml
+scene: !include scenes.yaml
+script: !include scripts.yaml
+
+timer:
+  timer_airco_bureau_koelen:
+    name: timer_airco_bureau_koelen
+    duration: "00:30:00"
+    icon: mdi:air-conditioner
+  timer_airco_slaapkamer_koelen:
+    name: timer_airco_slaapkamer_koelen
+    duration: "00:30:00"
+    icon: mdi:air-conditioner
+  timer_airco_woonkamer_koelen:
+    name: timer_airco_woonkamer_koelen
+    duration: "00:30:00"
+    icon: mdi:air-conditioner
+  timer_jacuzzi:
+    name: timer_jacuzzi
+    duration: "00:15:00"
+    icon: mdi:hot-tub
+  timer_tuinlicht_jacuzzi:
+    name: timer_tuinlicht_jacuzzi
+    duration: "00:10:00"
+    icon: mdi:outdoor-lamp
+  timer_tuinhuis_ventilatie:
+    name: timer_tuinhuis_ventilatie
+    duration: "00:15:00"
+    icon: mdi:fan

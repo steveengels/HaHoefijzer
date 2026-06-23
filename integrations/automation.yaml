@@ -1,4 +1,0 @@
-# My own handmade automations 
-automation manual: !include_dir_list ../entities/automations 
-# Automations I create in the UI 
-automation ui: !include ../automations.yaml

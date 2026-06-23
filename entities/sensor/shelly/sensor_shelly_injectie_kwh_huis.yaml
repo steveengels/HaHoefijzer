@@ -1,6 +1,0 @@
-- platform: integration
-  source: sensor.template_shelly_solar_huis
-  name: sensor_shelly_injectie_kwh_huis
-  unique_id: sensor_shelly_injectie_kwh_huis
-  round: 2
-  method: trapezoidal

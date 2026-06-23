@@ -1,5 +1,0 @@
-- platform: integration
-  source: sensor.shellyemhuis_em2_power
-  name: sensor_shelly_verbruik_kwh_huis
-  unique_id: sensor_shelly_verbruik_kwh_huis
-  round: 2

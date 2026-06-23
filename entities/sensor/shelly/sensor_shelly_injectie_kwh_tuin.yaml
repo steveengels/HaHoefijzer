@@ -1,6 +1,0 @@
-- platform: integration
-  source: sensor.template_shelly_solar_tuin
-  name: sensor_shelly_injectie_kwh_tuin
-  unique_id: sensor_shelly_injectie_kwh_tuin
-  round: 2
-  method: trapezoidal

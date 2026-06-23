@@ -1,5 +1,0 @@
-# My own handmade scripts
-script manual: !include_dir_named ../entities/scripts
-
-# Scripts I create in the UI
-script ui: !include ../scripts.yaml
