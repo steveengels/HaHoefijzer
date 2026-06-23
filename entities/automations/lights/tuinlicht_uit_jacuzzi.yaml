@@ -1,0 +1,17 @@
+alias: Licht tuin uit 10 minuten na uitzetten Jacuzzi
+id: licht_tuin_uit_jacuzzi
+trigger:
+  - platform: state
+    entity_id: binary_sensor.hoefijzer_spa_in_use
+    to: "off"
+
+action:
+  - delay: "00:10:00"
+  - condition: state
+    entity_id: binary_sensor.hoefijzer_spa_in_use
+    state: "off"
+  - service: switch.turn_off
+    target:
+      entity_id: switch.shelly_licht_tuin_switch_0
+
+mode: restart

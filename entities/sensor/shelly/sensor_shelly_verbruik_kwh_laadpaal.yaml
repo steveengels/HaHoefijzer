@@ -1,0 +1,5 @@
+- platform: integration
+  source: sensor.shellyemhuis_em0_power
+  name: sensor_shelly_verbruik_kwh_laadpaal
+  unique_id: sensor_shelly_verbruik_kwh_laadpaal
+  round: 2

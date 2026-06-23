@@ -1,0 +1,25 @@
+alias: Licht aan zonsondergang
+id: licht_aan_zonondergang
+description: 'Licht aan bij zonsondergang '
+triggers:
+- event: sunset
+  offset: 0
+  trigger: sun
+conditions: []
+actions:
+- action: light.turn_on
+  metadata: {}
+  data: {}
+  target:
+    entity_id:
+    - light.boekenkastlinks
+    - light.boekenkastrechts
+    - light.keuken
+    - light.marmerwoonkamer
+    - light.marmergarage
+- action: switch.turn_on
+  metadata: {}
+  data: {}
+  target:
+    entity_id: switch.garagestopcontact_schakelaar
+mode: single

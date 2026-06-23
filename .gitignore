@@ -1,0 +1,15 @@
+.storage/
+.cloud/
+.cache/
+deps/
+tts/
+*.db
+*.db-*
+*.log
+*.log.*
+*.pyc
+__pycache__/
+secrets.yaml
+known_devices.yaml
+home-assistant_v2.db
+home-assistant_v2.db-*

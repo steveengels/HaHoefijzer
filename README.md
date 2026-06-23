@@ -1,0 +1,2 @@
+# HAHoefijzer
+Home assistant Hoefijzer

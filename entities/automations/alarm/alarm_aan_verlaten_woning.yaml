@@ -1,0 +1,29 @@
+alias: Alarm aan verlaten woning
+id: alarm_aan_verlaten_woning
+description: Arm the alarm when everyone leaves home
+trigger:
+  - platform: zone
+    entity_id: device_tracker.steveengels
+    zone: zone.home
+    event: leave
+  - platform: zone
+    entity_id: device_tracker.oppo_a91
+    zone: zone.home
+    event: leave
+
+condition:
+  # Only arm if BOTH devices are not home
+  - condition: state
+    entity_id: device_tracker.steveengels
+    state: not_home
+  - condition: state
+    entity_id: device_tracker.oppo_a91
+    state: not_home
+
+action:
+  - service: alarm_control_panel.alarm_arm_away
+    data: {}
+    target:
+      device_id: d295219210dafad22c2a16a886a069d6
+
+mode: single

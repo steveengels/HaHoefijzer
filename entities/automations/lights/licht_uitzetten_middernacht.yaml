@@ -1,0 +1,35 @@
+alias: Licht uit middernacht
+id: licht_uit_middernacht
+description: Licht uitzetten middernacht als de TV uit is, probeer tot 4 uur
+trigger:
+  - platform: time
+    at: "00:00:00"
+  - platform: time_pattern
+    minutes: "/30"
+  - platform: time
+    at: "04:00:00"
+
+condition:
+  - condition: time
+    before: "04:00:00"
+  - condition: template
+    value_template: >
+      {{ states('media_player.lg_webos_smart_tv') in ['off', 'unavailable'] }}
+
+action:
+  - service: light.turn_off
+    target:
+      entity_id:
+        - light.boekenkastlinks
+        - light.boekenkastrechts
+        - light.marmergarage
+        - light.keuken
+        - light.marmerwoonkamer
+  - service: switch.turn_off
+    target:
+      entity_id:
+        - switch.garage
+        - switch.garagestopcontact_schakelaar
+        - switch.shelly_licht_tuin_switch_0
+
+mode: single

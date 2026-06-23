@@ -1,0 +1,14 @@
+alias: Licht aan zonsopgang
+id: licht_aan_zonsopgang
+description: Licht aan als de zon nog niet is opgekomen om 07:00
+triggers:
+- at: 07:00:00
+  trigger: time
+conditions:
+- condition: sun
+  before: sunrise
+actions:
+- target:
+    entity_id: light.boekenkastlinks
+  service: light.turn_on
+mode: single

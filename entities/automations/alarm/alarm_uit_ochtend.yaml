@@ -1,0 +1,13 @@
+alias: Alarm uit ochtend
+id: alarm_uit_ochtend
+description: Disarm the alarm after 7:00
+trigger:
+- platform: time
+  at: 07:00:00
+condition: []
+action:
+- service: alarm_control_panel.alarm_disarm
+  data: {}
+  target:
+    device_id: d295219210dafad22c2a16a886a069d6
+mode: single

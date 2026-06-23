@@ -1,0 +1,5 @@
+# My own handmade scenes
+scene manual: !include_dir_list ../entities/scenes
+
+# Scenes I create in the UI
+scene ui: !include ../scenes.yaml

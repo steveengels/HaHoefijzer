@@ -1,0 +1,32 @@
+alias: Alarm uit betreden woning
+id: alarm_uit_betreden_woning
+description: Disarm the alarm when either device arrives home
+trigger:
+- platform: zone
+  entity_id: device_tracker.steveengels
+  zone: zone.home
+  event: enter
+- platform: zone
+  entity_id: device_tracker.oppo_a91
+  zone: zone.home
+  event: enter
+condition:
+- condition: not
+  conditions:
+  - condition: time
+    after: 00:00:00
+    before: 07:00:00
+- condition: or
+  conditions:
+  - condition: state
+    entity_id: device_tracker.steveengels
+    state: home
+  - condition: state
+    entity_id: device_tracker.oppo_a91
+    state: home
+action:
+- service: alarm_control_panel.alarm_disarm
+  data: {}
+  target:
+    device_id: d295219210dafad22c2a16a886a069d6
+mode: single

@@ -1,0 +1,17 @@
+alias: Airco Slaapkamer - Stop koelen na 30 minuten
+id: airco_slaapkamer_stopkoelen
+description: Zet de airco uit wanneer de 30-minuten timer verloopt
+trigger:
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.timer_airco_slaapkamer_koelen
+
+action:
+  - service: climate.set_hvac_mode
+    target:
+      entity_id: climate.aircoslaapkamer_room_temperature
+    data:
+      hvac_mode: "off"
+
+mode: single
