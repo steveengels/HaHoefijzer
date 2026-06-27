@@ -1,0 +1,421 @@
+{
+  "version": "2026.6.4",
+  "info": {
+    "cost_sensors": {
+      "sensor.shellyemhuis_em2_total_active_energy": "sensor.shellyemhuis_em2_total_active_energy_cost",
+      "sensor.shellyemhuis_em2_total_active_returned_energy": "sensor.shellyemhuis_em2_total_active_returned_energy_compensation"
+    },
+    "solar_forecast_domains": [
+      "forecast_solar"
+    ]
+  },
+  "preferences": {
+    "energy_sources": [
+      {
+        "type": "battery",
+        "stat_energy_from": "sensor.gx_device_dc_battery_discharge_energy",
+        "stat_energy_to": "sensor.gx_device_dc_battery_charge_energy",
+        "power_config": {
+          "stat_rate_inverted": "sensor.gx_device_dc_battery_power"
+        },
+        "stat_soc": "sensor.gx_device_dc_battery_charge",
+        "stat_rate": "sensor.gx_device_dc_battery_power_inverted"
+      },
+      {
+        "type": "solar",
+        "stat_energy_from": "sensor.shellyemhuis_em1_total_active_returned_energy",
+        "config_entry_solar_forecast": null,
+        "stat_rate": "sensor.shellyemhuis_em1_power"
+      },
+      {
+        "type": "solar",
+        "stat_energy_from": "sensor.shellyemtuin_em0_total_active_returned_energy",
+        "config_entry_solar_forecast": null,
+        "stat_rate": "sensor.shellyemtuin_em0_power"
+      },
+      {
+        "type": "grid",
+        "stat_energy_from": "sensor.shellyemhuis_em2_total_active_energy",
+        "stat_energy_to": "sensor.shellyemhuis_em2_total_active_returned_energy",
+        "stat_cost": null,
+        "stat_compensation": null,
+        "entity_energy_price": null,
+        "number_energy_price": 0.35,
+        "entity_energy_price_export": null,
+        "number_energy_price_export": 0.1,
+        "cost_adjustment_day": 0,
+        "power_config": {
+          "stat_rate": "sensor.shellyemhuis_em2_power"
+        },
+        "stat_rate": "sensor.shellyemhuis_em2_power"
+      }
+    ],
+    "device_consumption": [
+      {
+        "stat_consumption": "sensor.shellyemhuis_em0_total_active_energy",
+        "stat_rate": "sensor.shellyemhuis_em0_power"
+      }
+    ],
+    "device_consumption_water": []
+  },
+  "metadata": {
+    "sensor.shellyemhuis_em1_total_active_returned_energy": {
+      "statistic_id": "sensor.shellyemhuis_em1_total_active_returned_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.shellyemhuis_em2_total_active_energy_cost": {
+      "statistic_id": "sensor.shellyemhuis_em2_total_active_energy_cost",
+      "display_unit_of_measurement": "EUR",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "EUR",
+      "unit_class": null
+    },
+    "sensor.shellyemhuis_em0_total_active_energy": {
+      "statistic_id": "sensor.shellyemhuis_em0_total_active_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.shellyemhuis_em2_total_active_energy": {
+      "statistic_id": "sensor.shellyemhuis_em2_total_active_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.gx_device_dc_battery_charge_energy": {
+      "statistic_id": "sensor.gx_device_dc_battery_charge_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.shellyemtuin_em0_total_active_returned_energy": {
+      "statistic_id": "sensor.shellyemtuin_em0_total_active_returned_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.shellyemhuis_em2_total_active_returned_energy": {
+      "statistic_id": "sensor.shellyemhuis_em2_total_active_returned_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.shellyemhuis_em2_total_active_returned_energy_compensation": {
+      "statistic_id": "sensor.shellyemhuis_em2_total_active_returned_energy_compensation",
+      "display_unit_of_measurement": "EUR",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "EUR",
+      "unit_class": null
+    },
+    "sensor.gx_device_dc_battery_discharge_energy": {
+      "statistic_id": "sensor.gx_device_dc_battery_discharge_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    }
+  },
+  "entities": {
+    "sensor.shellyemhuis_em1_total_active_returned_energy": {
+      "entity_id": "sensor.shellyemhuis_em1_total_active_returned_energy",
+      "device_id": "80c440426908cb22323cdb8ad40d071b",
+      "labels": [],
+      "translation_key": "energy_returned",
+      "platform": "shelly",
+      "has_entity_name": true,
+      "name": "SolarHuisInjectiekWh",
+      "display_precision": 2
+    },
+    "sensor.shellyemhuis_em2_total_active_energy_cost": {
+      "entity_id": "sensor.shellyemhuis_em2_total_active_energy_cost",
+      "labels": [],
+      "platform": "energy",
+      "name": "AfnameHuisVerbruikkWh Cost",
+      "hidden": true
+    },
+    "sensor.shellyemhuis_em0_total_active_energy": {
+      "entity_id": "sensor.shellyemhuis_em0_total_active_energy",
+      "device_id": "2f598e91a09d623dc7df0c041a83b6de",
+      "labels": [],
+      "platform": "shelly",
+      "has_entity_name": true,
+      "name": "LaadpaalVerbruikkWH",
+      "icon": "mdi:ev-plug-type2",
+      "display_precision": 2
+    },
+    "sensor.shellyemhuis_em2_total_active_energy": {
+      "entity_id": "sensor.shellyemhuis_em2_total_active_energy",
+      "device_id": "82afcc9baa98b936d9f4a433dbfb7e6e",
+      "labels": [],
+      "platform": "shelly",
+      "has_entity_name": true,
+      "name": "AfnameHuisVerbruikkWh",
+      "icon": "mdi:transmission-tower-export",
+      "display_precision": 2
+    },
+    "sensor.gx_device_dc_battery_charge_energy": {
+      "entity_id": "sensor.gx_device_dc_battery_charge_energy",
+      "device_id": "0dd3fd8d4f6df5a382fd70c74a168837",
+      "labels": [],
+      "translation_key": "system_dc_battery_charge_energy",
+      "platform": "victron_gx",
+      "has_entity_name": true,
+      "name": "DC battery charge energy",
+      "display_precision": 3
+    },
+    "sensor.shellyemtuin_em0_total_active_returned_energy": {
+      "entity_id": "sensor.shellyemtuin_em0_total_active_returned_energy",
+      "device_id": "b2f77083deca688ca523a09799765f11",
+      "labels": [],
+      "translation_key": "energy_returned",
+      "platform": "shelly",
+      "has_entity_name": true,
+      "name": "SolarTuinInjectiekWh",
+      "display_precision": 2
+    },
+    "sensor.shellyemhuis_em2_total_active_returned_energy": {
+      "entity_id": "sensor.shellyemhuis_em2_total_active_returned_energy",
+      "device_id": "82afcc9baa98b936d9f4a433dbfb7e6e",
+      "labels": [],
+      "translation_key": "energy_returned",
+      "platform": "shelly",
+      "has_entity_name": true,
+      "name": "AfnameHuisInjectiekWh",
+      "icon": "mdi:transmission-tower-import",
+      "display_precision": 2
+    },
+    "sensor.shellyemhuis_em2_total_active_returned_energy_compensation": {
+      "entity_id": "sensor.shellyemhuis_em2_total_active_returned_energy_compensation",
+      "labels": [],
+      "platform": "energy",
+      "name": "AfnameHuisInjectiekWh Compensation",
+      "hidden": true
+    },
+    "sensor.gx_device_dc_battery_discharge_energy": {
+      "entity_id": "sensor.gx_device_dc_battery_discharge_energy",
+      "device_id": "0dd3fd8d4f6df5a382fd70c74a168837",
+      "labels": [],
+      "translation_key": "system_dc_battery_discharge_energy",
+      "platform": "victron_gx",
+      "has_entity_name": true,
+      "name": "DC battery discharge energy",
+      "display_precision": 3
+    }
+  },
+  "states": {
+    "sensor.shellyemhuis_em1_total_active_returned_energy": {
+      "entity_id": "sensor.shellyemhuis_em1_total_active_returned_energy",
+      "state": "4998.9802",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "friendly_name": "SolarHuisInjectiekWh"
+      },
+      "context": {
+        "id": "01KVV1HK3BHJQNAPNE1GSC89CP",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-23T20:08:00.875Z",
+      "last_updated": "2026-06-23T20:08:00.875Z"
+    },
+    "sensor.shellyemhuis_em2_total_active_energy_cost": {
+      "entity_id": "sensor.shellyemhuis_em2_total_active_energy_cost",
+      "state": "15.1259220000002",
+      "attributes": {
+        "state_class": "total",
+        "last_reset": "2026-06-21T12:00:00.232105+00:00",
+        "unit_of_measurement": "EUR",
+        "device_class": "monetary",
+        "friendly_name": "AfnameHuisVerbruikkWh Cost"
+      },
+      "context": {
+        "id": "01KVV3YGVG75PHMEAEAXNAXNFY",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-23T20:50:01.712Z",
+      "last_updated": "2026-06-23T20:50:01.712Z"
+    },
+    "sensor.shellyemhuis_em0_total_active_energy": {
+      "entity_id": "sensor.shellyemhuis_em0_total_active_energy",
+      "state": "5308.9108",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "icon": "mdi:ev-plug-type2",
+        "friendly_name": "LaadpaalVerbruikkWH"
+      },
+      "context": {
+        "id": "01KVV3YGV6RH3DWSWYZB4MEMA9",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-23T20:50:01.702Z",
+      "last_updated": "2026-06-23T20:50:01.702Z"
+    },
+    "sensor.shellyemhuis_em2_total_active_energy": {
+      "entity_id": "sensor.shellyemhuis_em2_total_active_energy",
+      "state": "10156.88061",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "icon": "mdi:transmission-tower-export",
+        "friendly_name": "AfnameHuisVerbruikkWh"
+      },
+      "context": {
+        "id": "01KVV3YGVF224YW9XVF507SCG1",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-23T20:50:01.711Z",
+      "last_updated": "2026-06-23T20:50:01.711Z"
+    },
+    "sensor.gx_device_dc_battery_charge_energy": {
+      "entity_id": "sensor.gx_device_dc_battery_charge_energy",
+      "state": "29.149",
+      "attributes": {
+        "state_class": "total",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "friendly_name": "GX Device DC battery charge energy"
+      },
+      "context": {
+        "id": "01KVTX1281MXQBAFTH91M3AF8G",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-23T18:49:05.025Z",
+      "last_updated": "2026-06-23T18:49:05.025Z"
+    },
+    "sensor.shellyemtuin_em0_total_active_returned_energy": {
+      "entity_id": "sensor.shellyemtuin_em0_total_active_returned_energy",
+      "state": "872.33535",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "friendly_name": "SolarTuinInjectiekWh"
+      },
+      "context": {
+        "id": "01KVV1WJKPYDS2ZMM74JPWKEJ9",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-23T20:14:00.822Z",
+      "last_updated": "2026-06-23T20:14:00.822Z"
+    },
+    "sensor.shellyemhuis_em2_total_active_returned_energy": {
+      "entity_id": "sensor.shellyemhuis_em2_total_active_returned_energy",
+      "state": "2638.86875",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "icon": "mdi:transmission-tower-import",
+        "friendly_name": "AfnameHuisInjectiekWh"
+      },
+      "context": {
+        "id": "01KVV3YGVF7CP69X209QTDSPP1",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-23T20:50:01.711Z",
+      "last_updated": "2026-06-23T20:50:01.711Z"
+    },
+    "sensor.shellyemhuis_em2_total_active_returned_energy_compensation": {
+      "entity_id": "sensor.shellyemhuis_em2_total_active_returned_energy_compensation",
+      "state": "0.947594000000028",
+      "attributes": {
+        "state_class": "total",
+        "last_reset": "2026-06-21T12:00:00.233066+00:00",
+        "unit_of_measurement": "EUR",
+        "device_class": "monetary",
+        "friendly_name": "AfnameHuisInjectiekWh Compensation"
+      },
+      "context": {
+        "id": "01KVV3YGVG5VA1NXF2WDH2FB18",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-23T20:50:01.712Z",
+      "last_updated": "2026-06-23T20:50:01.712Z"
+    },
+    "sensor.gx_device_dc_battery_discharge_energy": {
+      "entity_id": "sensor.gx_device_dc_battery_discharge_energy",
+      "state": "30.165",
+      "attributes": {
+        "state_class": "total",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "friendly_name": "GX Device DC battery discharge energy"
+      },
+      "context": {
+        "id": "01KVV3Z4Q21ZMS8AKR7MV96PWY",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-23T20:50:22.050Z",
+      "last_updated": "2026-06-23T20:50:22.050Z"
+    }
+  },
+  "issues": {
+    "energy_sources": [
+      [],
+      [],
+      [],
+      []
+    ],
+    "device_consumption": [
+      []
+    ],
+    "device_consumption_water": []
+  }
+}

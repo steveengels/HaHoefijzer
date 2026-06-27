@@ -7,11 +7,15 @@
       above: 25
     - platform: time_pattern
       minutes: "/15"
+    - platform: state
+      entity_id: input_select.airco_mode
 
   condition:
-    - condition: numeric_state
-      entity_id: sensor.aircobureau_climatecontrol_room_temperature
-      above: 25
+    - condition: template
+      value_template: >
+        {% set threshold = 24 if is_state('input_select.airco_mode', 'Comfort') else 23 if is_state('input_select.airco_mode', 'Boost') else 25 %}
+        {{ not is_state('input_select.airco_mode', 'Off')
+           and states('sensor.aircobureau_climatecontrol_room_temperature') | float(0) > threshold }}
     - condition: not
       conditions:
         - condition: state
@@ -22,16 +26,19 @@
       before: "23:00:00"
 
   action:
+    - variables:
+        target_temperature: "{{ 21 if is_state('input_select.airco_mode', 'Boost') else 22 if is_state('input_select.airco_mode', 'Comfort') else 23 }}"
+        runtime: "{{ '01:00:00' if is_state('input_select.airco_mode', 'Boost') else '00:45:00' if is_state('input_select.airco_mode', 'Comfort') else '00:30:00' }}"
     - service: climate.set_temperature
       target:
         entity_id: climate.aircobureau_room_temperature
       data:
-        temperature: 23
+        temperature: "{{ target_temperature | int }}"
         hvac_mode: cool
 
     - service: timer.start
       data:
-        duration: "00:30:00"
+        duration: "{{ runtime }}"
       target:
         entity_id: timer.timer_airco_bureau_koelen
 
@@ -62,11 +69,15 @@
       above: 25
     - platform: time_pattern
       minutes: "/15"
+    - platform: state
+      entity_id: input_select.airco_mode
 
   condition:
-    - condition: numeric_state
-      entity_id: sensor.aircoslaapkamer_climatecontrol_room_temperature
-      above: 25
+    - condition: template
+      value_template: >
+        {% set threshold = 24 if is_state('input_select.airco_mode', 'Comfort') else 23 if is_state('input_select.airco_mode', 'Boost') else 25 %}
+        {{ not is_state('input_select.airco_mode', 'Off')
+           and states('sensor.aircoslaapkamer_climatecontrol_room_temperature') | float(0) > threshold }}
     - condition: not
       conditions:
         - condition: state
@@ -77,16 +88,19 @@
       before: "23:59:59"
 
   action:
+    - variables:
+        target_temperature: "{{ 21 if is_state('input_select.airco_mode', 'Boost') else 22 if is_state('input_select.airco_mode', 'Comfort') else 23 }}"
+        runtime: "{{ '01:00:00' if is_state('input_select.airco_mode', 'Boost') else '00:45:00' if is_state('input_select.airco_mode', 'Comfort') else '00:30:00' }}"
     - service: climate.set_temperature
       target:
         entity_id: climate.aircoslaapkamer_room_temperature
       data:
-        temperature: 23
+        temperature: "{{ target_temperature | int }}"
         hvac_mode: cool
 
     - service: timer.start
       data:
-        duration: "00:30:00"
+        duration: "{{ runtime }}"
       target:
         entity_id: timer.timer_airco_slaapkamer_koelen
 
@@ -117,11 +131,15 @@
       above: 25
     - platform: time_pattern
       minutes: "/15"
+    - platform: state
+      entity_id: input_select.airco_mode
 
   condition:
-    - condition: numeric_state
-      entity_id: sensor.aircowoonkamer_climatecontrol_room_temperature
-      above: 25
+    - condition: template
+      value_template: >
+        {% set threshold = 24 if is_state('input_select.airco_mode', 'Comfort') else 23 if is_state('input_select.airco_mode', 'Boost') else 25 %}
+        {{ not is_state('input_select.airco_mode', 'Off')
+           and states('sensor.aircowoonkamer_climatecontrol_room_temperature') | float(0) > threshold }}
     - condition: not
       conditions:
         - condition: state
@@ -132,19 +150,45 @@
       before: "23:00:00"
 
   action:
+    - variables:
+        target_temperature: "{{ 21 if is_state('input_select.airco_mode', 'Boost') else 22 if is_state('input_select.airco_mode', 'Comfort') else 23 }}"
+        runtime: "{{ '01:00:00' if is_state('input_select.airco_mode', 'Boost') else '00:45:00' if is_state('input_select.airco_mode', 'Comfort') else '00:30:00' }}"
     - service: climate.set_temperature
       target:
         entity_id: climate.aircowoonkamer_room_temperature
       data:
-        temperature: 23
+        temperature: "{{ target_temperature | int }}"
         hvac_mode: cool
 
     - service: timer.start
       data:
-        duration: "00:30:00"
+        duration: "{{ runtime }}"
       target:
         entity_id: timer.timer_airco_woonkamer_koelen
 
+  mode: single
+- alias: Airco - Mode off
+  id: airco_mode_off
+  description: Turn off all airco units when the global airco mode is Off.
+  trigger:
+    - platform: state
+      entity_id: input_select.airco_mode
+      to: "Off"
+  action:
+    - service: climate.set_hvac_mode
+      target:
+        entity_id:
+          - climate.aircobureau_room_temperature
+          - climate.aircoslaapkamer_room_temperature
+          - climate.aircowoonkamer_room_temperature
+      data:
+        hvac_mode: "off"
+    - service: timer.cancel
+      target:
+        entity_id:
+          - timer.timer_airco_bureau_koelen
+          - timer.timer_airco_slaapkamer_koelen
+          - timer.timer_airco_woonkamer_koelen
   mode: single
 - alias: Airco Woonkamer - Stop koelen na 30 minuten
   id: airco_woonkamer_stopkoelen
@@ -307,59 +351,82 @@
     target:
       device_id: d295219210dafad22c2a16a886a069d6
   mode: single
-- alias: Laadpaal vermogen verlagen
-  id: laadpaal_vermogen_verlagen
-  description: Verlaag het laadvermorgen van de laadpaal vanaf 18u, of wanneer de Jacuzzi actief is
+- alias: Laadpaal smart vermogen
+  id: laadpaal_smart_vermogen
+  description: Adjust the Alfen charger current using mode, solar export, battery reserve, time, and jacuzzi priority.
   triggers:
-    - at: "18:00"
-      trigger: time
-    - platform: state
-      entity_id: binary_sensor.hoefijzer_spa_in_use
-      to: "on"
-  action:
-    - service: number.set_value
-      target:
-        entity_id:
-          - number.laadpaal_max_station_current
-          - number.laadpaal_power_connector_external_max_current_socket_1
-          - number.laadpaal_power_connector_max_current_socket_1
-      data:
-        value: 8
-    - service: timer.start
-      target:
-        entity_id: timer.timer_jacuzzi
-  mode: restart
-
-- alias: Laadpaal vermogen verhogen
-  id: laadpaal_vermogen_verhogen
-  description: Verhoog het laadvermorgen van de laadpaal vanaf 00:00, of wanneer de Jacuzzi niet actief is
-  triggers:
+    - platform: time_pattern
+      minutes: "/5"
     - platform: time
-      at: "00:00"
+      at:
+        - "00:00:00"
+        - "18:00:00"
     - platform: state
-      entity_id: binary_sensor.hoefijzer_spa_in_use
-      to: "off"
-    - platform: state
-      entity_id: timer.timer_jacuzzi
-      to: "idle"
-  condition:
-    - condition: state
-      entity_id: binary_sensor.hoefijzer_spa_in_use
-      state: "off"
-    - condition: state
-      entity_id: timer.timer_jacuzzi
-      state: "idle"
-    - condition: time
-      before: "18:00"
+      entity_id:
+        - input_select.ev_charging_mode
+        - input_number.ev_charging_battery_reserve
+        - binary_sensor.hoefijzer_spa_in_use
+        - timer.timer_jacuzzi
+        - sensor.gx_device_dc_battery_charge
+    - platform: numeric_state
+      entity_id: sensor.grid_power_2_minute_average
+      above: 900
+    - platform: numeric_state
+      entity_id: sensor.grid_power_2_minute_average
+      below: -700
   action:
-    - service: number.set_value
-      target:
-        entity_id:
-          - number.laadpaal_max_station_current
-          - number.laadpaal_power_connector_external_max_current_socket_1
-          - number.laadpaal_power_connector_max_current_socket_1
+    - if:
+        - condition: state
+          entity_id: binary_sensor.hoefijzer_spa_in_use
+          state: "on"
+      then:
+        - service: timer.start
+          target:
+            entity_id: timer.timer_jacuzzi
+    - variables:
+        mode: "{{ states('input_select.ev_charging_mode') }}"
+        grid_power_w: "{{ states('sensor.grid_power_2_minute_average') | float(0) }}"
+        battery_soc: "{{ states('sensor.gx_device_dc_battery_charge') | float(0) }}"
+        battery_reserve: "{{ states('input_number.ev_charging_battery_reserve') | float(55) }}"
+        current_limit: "{{ states('number.alfen_max_station_current_2') | float(8) }}"
+        jacuzzi_priority: >
+          {{ is_state('binary_sensor.hoefijzer_spa_in_use', 'on')
+             or not is_state('timer.timer_jacuzzi', 'idle') }}
+        solar_amps: >
+          {% if grid_power_w < -4200 %}
+            16
+          {% elif grid_power_w < -3200 %}
+            14
+          {% elif grid_power_w < -2300 %}
+            12
+          {% elif grid_power_w < -1500 %}
+            10
+          {% elif grid_power_w < -700 %}
+            8
+          {% elif grid_power_w > 900 %}
+            {{ [8, current_limit - 2] | max | int }}
+          {% else %}
+            {{ current_limit | int }}
+          {% endif %}
+        target_amps: >
+          {% if jacuzzi_priority %}
+            8
+          {% elif mode == 'Paused' %}
+            6
+          {% elif mode == 'Boost' %}
+            16
+          {% elif mode == 'Normal' %}
+            {{ 16 if now().hour < 18 else 8 }}
+          {% elif mode == 'Solar' %}
+            {{ 8 if battery_soc < battery_reserve else solar_amps | int }}
+          {% else %}
+            8
+          {% endif %}
+    - condition: template
+      value_template: "{{ target_amps | int != current_limit | int }}"
+    - service: script.set_ev_charger_current
       data:
-        value: 16
+        amps: "{{ target_amps | int }}"
   mode: restart
 - alias: Licht woonkamer aan
   id: licht_woonkamer_aan

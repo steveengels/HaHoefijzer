@@ -23,10 +23,59 @@ automation: !include automations.yaml
 scene: !include scenes.yaml
 script: !include scripts.yaml
 
+sensor:
+  - platform: filter
+    name: Grid power 2 minute average
+    unique_id: grid_power_2_minute_average
+    entity_id: sensor.shellyemhuis_em2_power
+    filters:
+      - filter: time_simple_moving_average
+        window_size: "00:02"
+        precision: 0
+
+lovelace:
+  dashboards:
+    hoefijzer-dashboard:
+      mode: yaml
+      title: Hoefijzer
+      icon: mdi:home-lightning-bolt
+      show_in_sidebar: true
+      filename: dashboards/overview.yaml
+
 input_boolean:
   alexa_living_room_lights:
     name: Alexa living room lights
     icon: mdi:lightbulb-group
+
+input_select:
+  ev_charging_mode:
+    name: EV charging mode
+    icon: mdi:ev-station
+    options:
+      - Solar
+      - Normal
+      - Boost
+      - Paused
+    initial: Solar
+  airco_mode:
+    name: Airco mode
+    icon: mdi:air-conditioner
+    options:
+      - Off
+      - Eco
+      - Comfort
+      - Boost
+    initial: Eco
+
+input_number:
+  ev_charging_battery_reserve:
+    name: EV charging battery reserve
+    min: 20
+    max: 95
+    step: 5
+    unit_of_measurement: "%"
+    icon: mdi:battery-lock
+    initial: 55
 
 emulated_hue:
   listen_port: 80

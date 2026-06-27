@@ -1,0 +1,78 @@
+title: Hoefijzer
+views:
+  - title: Energy
+    path: energy
+    icon: mdi:home-lightning-bolt
+    cards:
+      - type: entities
+        title: EV Charging
+        entities:
+          - entity: input_select.ev_charging_mode
+            name: Mode
+          - entity: input_number.ev_charging_battery_reserve
+            name: Battery reserve
+          - entity: number.alfen_max_station_current_2
+            name: Alfen max current
+          - entity: sensor.shellyemhuis_em0_power
+            name: Charger power
+          - entity: sensor.shellyemhuis_em0_total_active_energy
+            name: Charger energy
+      - type: entities
+        title: Grid And Solar
+        entities:
+          - entity: sensor.shellyemhuis_em2_power
+            name: Grid power
+          - entity: sensor.grid_power_2_minute_average
+            name: Grid power 2 min avg
+          - entity: sensor.shellyemhuis_em2_total_active_energy
+            name: Grid import
+          - entity: sensor.shellyemhuis_em2_total_active_returned_energy
+            name: Grid export
+          - entity: sensor.shellyemhuis_em1_power
+            name: Solar house
+          - entity: sensor.shellyemtuin_em0_power
+            name: Solar garden
+      - type: entities
+        title: Battery And Loads
+        entities:
+          - entity: sensor.gx_device_dc_battery_charge
+            name: Battery charge
+          - entity: sensor.gx_device_dc_battery_power
+            name: Battery power
+          - entity: binary_sensor.hoefijzer_spa_in_use
+            name: Jacuzzi active
+          - entity: timer.timer_jacuzzi
+            name: Jacuzzi priority timer
+      - type: history-graph
+        title: Energy Trend
+        hours_to_show: 6
+        entities:
+          - sensor.shellyemhuis_em2_power
+          - sensor.grid_power_2_minute_average
+          - sensor.shellyemhuis_em1_power
+          - sensor.shellyemtuin_em0_power
+          - sensor.gx_device_dc_battery_power
+  - title: Climate
+    path: climate
+    icon: mdi:air-conditioner
+    cards:
+      - type: entities
+        title: Airco Mode
+        entities:
+          - entity: input_select.airco_mode
+            name: Mode
+          - entity: timer.timer_airco_bureau_koelen
+            name: Bureau timer
+          - entity: timer.timer_airco_slaapkamer_koelen
+            name: Slaapkamer timer
+          - entity: timer.timer_airco_woonkamer_koelen
+            name: Woonkamer timer
+      - type: thermostat
+        entity: climate.aircobureau_room_temperature
+        name: Bureau
+      - type: thermostat
+        entity: climate.aircoslaapkamer_room_temperature
+        name: Slaapkamer
+      - type: thermostat
+        entity: climate.aircowoonkamer_room_temperature
+        name: Woonkamer

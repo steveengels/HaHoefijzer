@@ -8,6 +8,7 @@ tts/
 *.log
 *.log.*
 *diagnostics*.json
+!dashboards/energy_diagnostics.json
 *.pyc
 __pycache__/
 secrets.yaml

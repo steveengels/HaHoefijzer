@@ -24,3 +24,25 @@ office_play_music:
         sound_mode: MCH STEREO
     # Play random playlist
     - service: script.office_set_random_playlist
+
+set_ev_charger_current:
+  mode: queued
+  fields:
+    amps:
+      name: Amps
+      description: Current limit for the Alfen charger.
+      selector:
+        number:
+          min: 6
+          max: 16
+          step: 1
+          unit_of_measurement: A
+  sequence:
+    - variables:
+        requested_amps: "{{ amps | int(8) }}"
+        safe_amps: "{{ [16, [6, requested_amps] | max] | min }}"
+    - service: number.set_value
+      target:
+        entity_id: number.alfen_max_station_current_2
+      data:
+        value: "{{ safe_amps }}"
