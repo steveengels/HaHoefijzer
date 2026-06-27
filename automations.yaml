@@ -548,3 +548,37 @@
         entity_id: switch.shelly_licht_tuin_switch_0
 
   mode: single
+- alias: Alexa - Living room lights on
+  id: alexa_living_room_lights_on
+  description: Turn on selected living room lights from Alexa via emulated Hue.
+  trigger:
+    - platform: state
+      entity_id: input_boolean.alexa_living_room_lights
+      to: "on"
+  action:
+    - service: light.turn_on
+      target:
+        entity_id:
+          - light.boekenkastlinks
+          - light.boekenkastrechts
+          - light.keuken
+          - light.marmergarage
+          - light.marmerwoonkamer
+  mode: single
+- alias: Alexa - Living room lights off
+  id: alexa_living_room_lights_off
+  description: Turn off selected living room lights from Alexa via emulated Hue.
+  trigger:
+    - platform: state
+      entity_id: input_boolean.alexa_living_room_lights
+      to: "off"
+  action:
+    - service: light.turn_off
+      target:
+        entity_id:
+          - light.boekenkastlinks
+          - light.boekenkastrechts
+          - light.keuken
+          - light.marmergarage
+          - light.marmerwoonkamer
+  mode: single

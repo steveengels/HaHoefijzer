@@ -23,6 +23,19 @@ automation: !include automations.yaml
 scene: !include scenes.yaml
 script: !include scripts.yaml
 
+input_boolean:
+  alexa_living_room_lights:
+    name: Alexa living room lights
+    icon: mdi:lightbulb-group
+
+emulated_hue:
+  listen_port: 80
+  expose_by_default: false
+  entities:
+    input_boolean.alexa_living_room_lights:
+      name: "Living room lights"
+      hidden: false
+
 timer:
   timer_airco_bureau_koelen:
     name: timer_airco_bureau_koelen
