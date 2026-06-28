@@ -37,15 +37,15 @@ lovelace:
   dashboards:
     overview-dashboard:
       mode: yaml
-      title: Overview
-      icon: mdi:view-dashboard
+      title: Hoefijzer
+      icon: mdi:home-lightning-bolt
       show_in_sidebar: true
       filename: dashboards/overview.yaml
     hoefijzer-dashboard:
       mode: yaml
       title: Hoefijzer
       icon: mdi:home-lightning-bolt
-      show_in_sidebar: true
+      show_in_sidebar: false
       filename: dashboards/hoefijzer.yaml
 
 input_boolean:
