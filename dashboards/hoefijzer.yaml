@@ -1,5 +1,5 @@
 title: Hoefijzer
-background: linear-gradient(rgba(246, 248, 251, 0.84), rgba(246, 248, 251, 0.84)), center / cover no-repeat fixed url("https://cdn.jsdelivr.net/gh/basnijholt/lovelace-ios-themes@master/themes/homekit-bg-blue-red.jpg")
+background: linear-gradient(rgba(246, 248, 251, 0.58), rgba(246, 248, 251, 0.58)), center / cover no-repeat fixed url("https://cdn.jsdelivr.net/gh/basnijholt/lovelace-ios-themes@master/themes/homekit-bg-blue-red.jpg")
 views:
   - type: sections
     max_columns: 3
@@ -248,7 +248,7 @@ views:
         show_icon: true
         entity: sensor.date_time
   - type: sections
-    max_columns: 4
+    max_columns: 3
     path: energy
     title: Energie
     icon: mdi:home-lightning-bolt
@@ -263,12 +263,17 @@ views:
           - title: Energiedistributie
             type: energy-distribution
             link_dashboard: true
+      - type: grid
+        cards:
+          - type: heading
+            heading: Weer
+            heading_style: title
+            icon: mdi:weather-partly-cloudy
           - show_current: true
             show_forecast: true
             type: weather-forecast
             entity: weather.forecast_thuis
             forecast_type: daily
-        column_span: 2
       - type: grid
         cards:
           - type: heading
@@ -497,7 +502,7 @@ views:
               - sensor.solar_house_production_w
               - sensor.solar_garden_production_w
               - sensor.jk_bms_id_512_power
-        column_span: 4
+        column_span: 3
     header:
       layout: start
       badges_position: top
