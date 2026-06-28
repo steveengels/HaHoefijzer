@@ -35,12 +35,18 @@ sensor:
 
 lovelace:
   dashboards:
+    overview-dashboard:
+      mode: yaml
+      title: Overview
+      icon: mdi:view-dashboard
+      show_in_sidebar: true
+      filename: dashboards/overview.yaml
     hoefijzer-dashboard:
       mode: yaml
       title: Hoefijzer
       icon: mdi:home-lightning-bolt
       show_in_sidebar: true
-      filename: dashboards/overview.yaml
+      filename: dashboards/hoefijzer.yaml
 
 input_boolean:
   alexa_living_room_lights:
