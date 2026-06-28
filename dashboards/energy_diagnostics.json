@@ -13,24 +13,28 @@
     "energy_sources": [
       {
         "type": "battery",
-        "stat_energy_from": "sensor.gx_device_dc_battery_discharge_energy",
-        "stat_energy_to": "sensor.gx_device_dc_battery_charge_energy",
+        "stat_energy_from": "sensor.jk_bms_id_512_discharged_energy",
+        "stat_energy_to": "sensor.jk_bms_id_512_charged_energy",
         "power_config": {
-          "stat_rate_inverted": "sensor.gx_device_dc_battery_power"
+          "stat_rate_inverted": "sensor.jk_bms_id_512_power"
         },
-        "stat_soc": "sensor.gx_device_dc_battery_charge",
-        "stat_rate": "sensor.gx_device_dc_battery_power_inverted"
+        "stat_soc": "sensor.jk_bms_id_512_charge",
+        "stat_rate": "sensor.jk_bms_id_512_power_inverted"
       },
       {
         "type": "solar",
         "stat_energy_from": "sensor.shellyemhuis_em1_total_active_returned_energy",
-        "config_entry_solar_forecast": null,
+        "config_entry_solar_forecast": [
+          "01JRW9FJJRX1JJM10DPCNNNJZV"
+        ],
         "stat_rate": "sensor.shellyemhuis_em1_power"
       },
       {
         "type": "solar",
         "stat_energy_from": "sensor.shellyemtuin_em0_total_active_returned_energy",
-        "config_entry_solar_forecast": null,
+        "config_entry_solar_forecast": [
+          "01JRW9G9JGK0J7BQBTNZFBJVA3"
+        ],
         "stat_rate": "sensor.shellyemtuin_em0_power"
       },
       {
@@ -54,77 +58,29 @@
       {
         "stat_consumption": "sensor.shellyemhuis_em0_total_active_energy",
         "stat_rate": "sensor.shellyemhuis_em0_power"
+      },
+      {
+        "stat_consumption": "sensor.aircobureau_climatecontrol_cooling_daily_electrical_consumption"
+      },
+      {
+        "stat_consumption": "sensor.aircobureau_climatecontrol_heating_daily_electrical_consumption"
+      },
+      {
+        "stat_consumption": "sensor.aircoslaapkamer_climatecontrol_cooling_daily_electrical_consumption"
+      },
+      {
+        "stat_consumption": "sensor.aircoslaapkamer_climatecontrol_heating_daily_electrical_consumption"
+      },
+      {
+        "stat_consumption": "sensor.aircowoonkamer_climatecontrol_cooling_daily_electrical_consumption"
+      },
+      {
+        "stat_consumption": "sensor.aircowoonkamer_climatecontrol_heating_daily_electrical_consumption"
       }
     ],
     "device_consumption_water": []
   },
   "metadata": {
-    "sensor.shellyemhuis_em1_total_active_returned_energy": {
-      "statistic_id": "sensor.shellyemhuis_em1_total_active_returned_energy",
-      "display_unit_of_measurement": "kWh",
-      "has_mean": false,
-      "mean_type": 0,
-      "has_sum": true,
-      "name": null,
-      "source": "recorder",
-      "statistics_unit_of_measurement": "kWh",
-      "unit_class": "energy"
-    },
-    "sensor.shellyemhuis_em2_total_active_energy_cost": {
-      "statistic_id": "sensor.shellyemhuis_em2_total_active_energy_cost",
-      "display_unit_of_measurement": "EUR",
-      "has_mean": false,
-      "mean_type": 0,
-      "has_sum": true,
-      "name": null,
-      "source": "recorder",
-      "statistics_unit_of_measurement": "EUR",
-      "unit_class": null
-    },
-    "sensor.shellyemhuis_em0_total_active_energy": {
-      "statistic_id": "sensor.shellyemhuis_em0_total_active_energy",
-      "display_unit_of_measurement": "kWh",
-      "has_mean": false,
-      "mean_type": 0,
-      "has_sum": true,
-      "name": null,
-      "source": "recorder",
-      "statistics_unit_of_measurement": "kWh",
-      "unit_class": "energy"
-    },
-    "sensor.shellyemhuis_em2_total_active_energy": {
-      "statistic_id": "sensor.shellyemhuis_em2_total_active_energy",
-      "display_unit_of_measurement": "kWh",
-      "has_mean": false,
-      "mean_type": 0,
-      "has_sum": true,
-      "name": null,
-      "source": "recorder",
-      "statistics_unit_of_measurement": "kWh",
-      "unit_class": "energy"
-    },
-    "sensor.gx_device_dc_battery_charge_energy": {
-      "statistic_id": "sensor.gx_device_dc_battery_charge_energy",
-      "display_unit_of_measurement": "kWh",
-      "has_mean": false,
-      "mean_type": 0,
-      "has_sum": true,
-      "name": null,
-      "source": "recorder",
-      "statistics_unit_of_measurement": "kWh",
-      "unit_class": "energy"
-    },
-    "sensor.shellyemtuin_em0_total_active_returned_energy": {
-      "statistic_id": "sensor.shellyemtuin_em0_total_active_returned_energy",
-      "display_unit_of_measurement": "kWh",
-      "has_mean": false,
-      "mean_type": 0,
-      "has_sum": true,
-      "name": null,
-      "source": "recorder",
-      "statistics_unit_of_measurement": "kWh",
-      "unit_class": "energy"
-    },
     "sensor.shellyemhuis_em2_total_active_returned_energy": {
       "statistic_id": "sensor.shellyemhuis_em2_total_active_returned_energy",
       "display_unit_of_measurement": "kWh",
@@ -147,8 +103,140 @@
       "statistics_unit_of_measurement": "EUR",
       "unit_class": null
     },
-    "sensor.gx_device_dc_battery_discharge_energy": {
-      "statistic_id": "sensor.gx_device_dc_battery_discharge_energy",
+    "sensor.aircobureau_climatecontrol_cooling_daily_electrical_consumption": {
+      "statistic_id": "sensor.aircobureau_climatecontrol_cooling_daily_electrical_consumption",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.jk_bms_id_512_charged_energy": {
+      "statistic_id": "sensor.jk_bms_id_512_charged_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.jk_bms_id_512_discharged_energy": {
+      "statistic_id": "sensor.jk_bms_id_512_discharged_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.shellyemhuis_em2_total_active_energy_cost": {
+      "statistic_id": "sensor.shellyemhuis_em2_total_active_energy_cost",
+      "display_unit_of_measurement": "EUR",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "EUR",
+      "unit_class": null
+    },
+    "sensor.shellyemhuis_em2_total_active_energy": {
+      "statistic_id": "sensor.shellyemhuis_em2_total_active_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.aircobureau_climatecontrol_heating_daily_electrical_consumption": {
+      "statistic_id": "sensor.aircobureau_climatecontrol_heating_daily_electrical_consumption",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.shellyemhuis_em1_total_active_returned_energy": {
+      "statistic_id": "sensor.shellyemhuis_em1_total_active_returned_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.aircoslaapkamer_climatecontrol_cooling_daily_electrical_consumption": {
+      "statistic_id": "sensor.aircoslaapkamer_climatecontrol_cooling_daily_electrical_consumption",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.aircoslaapkamer_climatecontrol_heating_daily_electrical_consumption": {
+      "statistic_id": "sensor.aircoslaapkamer_climatecontrol_heating_daily_electrical_consumption",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.aircowoonkamer_climatecontrol_heating_daily_electrical_consumption": {
+      "statistic_id": "sensor.aircowoonkamer_climatecontrol_heating_daily_electrical_consumption",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.shellyemtuin_em0_total_active_returned_energy": {
+      "statistic_id": "sensor.shellyemtuin_em0_total_active_returned_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.shellyemhuis_em0_total_active_energy": {
+      "statistic_id": "sensor.shellyemhuis_em0_total_active_energy",
+      "display_unit_of_measurement": "kWh",
+      "has_mean": false,
+      "mean_type": 0,
+      "has_sum": true,
+      "name": null,
+      "source": "recorder",
+      "statistics_unit_of_measurement": "kWh",
+      "unit_class": "energy"
+    },
+    "sensor.aircowoonkamer_climatecontrol_cooling_daily_electrical_consumption": {
+      "statistic_id": "sensor.aircowoonkamer_climatecontrol_cooling_daily_electrical_consumption",
       "display_unit_of_measurement": "kWh",
       "has_mean": false,
       "mean_type": 0,
@@ -160,63 +248,6 @@
     }
   },
   "entities": {
-    "sensor.shellyemhuis_em1_total_active_returned_energy": {
-      "entity_id": "sensor.shellyemhuis_em1_total_active_returned_energy",
-      "device_id": "80c440426908cb22323cdb8ad40d071b",
-      "labels": [],
-      "translation_key": "energy_returned",
-      "platform": "shelly",
-      "has_entity_name": true,
-      "name": "SolarHuisInjectiekWh",
-      "display_precision": 2
-    },
-    "sensor.shellyemhuis_em2_total_active_energy_cost": {
-      "entity_id": "sensor.shellyemhuis_em2_total_active_energy_cost",
-      "labels": [],
-      "platform": "energy",
-      "name": "AfnameHuisVerbruikkWh Cost",
-      "hidden": true
-    },
-    "sensor.shellyemhuis_em0_total_active_energy": {
-      "entity_id": "sensor.shellyemhuis_em0_total_active_energy",
-      "device_id": "2f598e91a09d623dc7df0c041a83b6de",
-      "labels": [],
-      "platform": "shelly",
-      "has_entity_name": true,
-      "name": "LaadpaalVerbruikkWH",
-      "icon": "mdi:ev-plug-type2",
-      "display_precision": 2
-    },
-    "sensor.shellyemhuis_em2_total_active_energy": {
-      "entity_id": "sensor.shellyemhuis_em2_total_active_energy",
-      "device_id": "82afcc9baa98b936d9f4a433dbfb7e6e",
-      "labels": [],
-      "platform": "shelly",
-      "has_entity_name": true,
-      "name": "AfnameHuisVerbruikkWh",
-      "icon": "mdi:transmission-tower-export",
-      "display_precision": 2
-    },
-    "sensor.gx_device_dc_battery_charge_energy": {
-      "entity_id": "sensor.gx_device_dc_battery_charge_energy",
-      "device_id": "0dd3fd8d4f6df5a382fd70c74a168837",
-      "labels": [],
-      "translation_key": "system_dc_battery_charge_energy",
-      "platform": "victron_gx",
-      "has_entity_name": true,
-      "name": "DC battery charge energy",
-      "display_precision": 3
-    },
-    "sensor.shellyemtuin_em0_total_active_returned_energy": {
-      "entity_id": "sensor.shellyemtuin_em0_total_active_returned_energy",
-      "device_id": "b2f77083deca688ca523a09799765f11",
-      "labels": [],
-      "translation_key": "energy_returned",
-      "platform": "shelly",
-      "has_entity_name": true,
-      "name": "SolarTuinInjectiekWh",
-      "display_precision": 2
-    },
     "sensor.shellyemhuis_em2_total_active_returned_energy": {
       "entity_id": "sensor.shellyemhuis_em2_total_active_returned_energy",
       "device_id": "82afcc9baa98b936d9f4a433dbfb7e6e",
@@ -232,129 +263,141 @@
       "entity_id": "sensor.shellyemhuis_em2_total_active_returned_energy_compensation",
       "labels": [],
       "platform": "energy",
-      "name": "AfnameHuisInjectiekWh Compensation",
+      "name": "sensor Compensation",
       "hidden": true
     },
-    "sensor.gx_device_dc_battery_discharge_energy": {
-      "entity_id": "sensor.gx_device_dc_battery_discharge_energy",
-      "device_id": "0dd3fd8d4f6df5a382fd70c74a168837",
+    "sensor.aircobureau_climatecontrol_cooling_daily_electrical_consumption": {
+      "entity_id": "sensor.aircobureau_climatecontrol_cooling_daily_electrical_consumption",
+      "device_id": "b3c142f866d764ea96b67e60a15a8f64",
       "labels": [],
-      "translation_key": "system_dc_battery_discharge_energy",
+      "translation_key": "coolingdailyelectricalconsumption",
+      "platform": "daikin_onecta",
+      "has_entity_name": true,
+      "name": "Dagelijks elektriciteitsverbruik koelen",
+      "display_precision": 2
+    },
+    "sensor.jk_bms_id_512_charged_energy": {
+      "entity_id": "sensor.jk_bms_id_512_charged_energy",
+      "device_id": "fa290384115dce1da244930a1164bc02",
+      "labels": [],
+      "translation_key": "battery_charged_energy",
       "platform": "victron_gx",
       "has_entity_name": true,
-      "name": "DC battery discharge energy",
-      "display_precision": 3
-    }
-  },
-  "states": {
-    "sensor.shellyemhuis_em1_total_active_returned_energy": {
-      "entity_id": "sensor.shellyemhuis_em1_total_active_returned_energy",
-      "state": "4998.9802",
-      "attributes": {
-        "state_class": "total_increasing",
-        "unit_of_measurement": "kWh",
-        "device_class": "energy",
-        "friendly_name": "SolarHuisInjectiekWh"
-      },
-      "context": {
-        "id": "01KVV1HK3BHJQNAPNE1GSC89CP",
-        "parent_id": null,
-        "user_id": null
-      },
-      "last_changed": "2026-06-23T20:08:00.875Z",
-      "last_updated": "2026-06-23T20:08:00.875Z"
+      "name": "Charged energy",
+      "display_precision": 1
+    },
+    "sensor.jk_bms_id_512_discharged_energy": {
+      "entity_id": "sensor.jk_bms_id_512_discharged_energy",
+      "device_id": "fa290384115dce1da244930a1164bc02",
+      "labels": [],
+      "translation_key": "battery_discharged_energy",
+      "platform": "victron_gx",
+      "has_entity_name": true,
+      "name": "Discharged energy",
+      "display_precision": 1
     },
     "sensor.shellyemhuis_em2_total_active_energy_cost": {
       "entity_id": "sensor.shellyemhuis_em2_total_active_energy_cost",
-      "state": "15.1259220000002",
-      "attributes": {
-        "state_class": "total",
-        "last_reset": "2026-06-21T12:00:00.232105+00:00",
-        "unit_of_measurement": "EUR",
-        "device_class": "monetary",
-        "friendly_name": "AfnameHuisVerbruikkWh Cost"
-      },
-      "context": {
-        "id": "01KVV3YGVG75PHMEAEAXNAXNFY",
-        "parent_id": null,
-        "user_id": null
-      },
-      "last_changed": "2026-06-23T20:50:01.712Z",
-      "last_updated": "2026-06-23T20:50:01.712Z"
-    },
-    "sensor.shellyemhuis_em0_total_active_energy": {
-      "entity_id": "sensor.shellyemhuis_em0_total_active_energy",
-      "state": "5308.9108",
-      "attributes": {
-        "state_class": "total_increasing",
-        "unit_of_measurement": "kWh",
-        "device_class": "energy",
-        "icon": "mdi:ev-plug-type2",
-        "friendly_name": "LaadpaalVerbruikkWH"
-      },
-      "context": {
-        "id": "01KVV3YGV6RH3DWSWYZB4MEMA9",
-        "parent_id": null,
-        "user_id": null
-      },
-      "last_changed": "2026-06-23T20:50:01.702Z",
-      "last_updated": "2026-06-23T20:50:01.702Z"
+      "labels": [],
+      "platform": "energy",
+      "name": "sensor Cost",
+      "hidden": true
     },
     "sensor.shellyemhuis_em2_total_active_energy": {
       "entity_id": "sensor.shellyemhuis_em2_total_active_energy",
-      "state": "10156.88061",
-      "attributes": {
-        "state_class": "total_increasing",
-        "unit_of_measurement": "kWh",
-        "device_class": "energy",
-        "icon": "mdi:transmission-tower-export",
-        "friendly_name": "AfnameHuisVerbruikkWh"
-      },
-      "context": {
-        "id": "01KVV3YGVF224YW9XVF507SCG1",
-        "parent_id": null,
-        "user_id": null
-      },
-      "last_changed": "2026-06-23T20:50:01.711Z",
-      "last_updated": "2026-06-23T20:50:01.711Z"
+      "device_id": "82afcc9baa98b936d9f4a433dbfb7e6e",
+      "labels": [],
+      "platform": "shelly",
+      "has_entity_name": true,
+      "name": "AfnameHuisVerbruikkWh",
+      "icon": "mdi:transmission-tower-export",
+      "display_precision": 2
     },
-    "sensor.gx_device_dc_battery_charge_energy": {
-      "entity_id": "sensor.gx_device_dc_battery_charge_energy",
-      "state": "29.149",
-      "attributes": {
-        "state_class": "total",
-        "unit_of_measurement": "kWh",
-        "device_class": "energy",
-        "friendly_name": "GX Device DC battery charge energy"
-      },
-      "context": {
-        "id": "01KVTX1281MXQBAFTH91M3AF8G",
-        "parent_id": null,
-        "user_id": null
-      },
-      "last_changed": "2026-06-23T18:49:05.025Z",
-      "last_updated": "2026-06-23T18:49:05.025Z"
+    "sensor.aircobureau_climatecontrol_heating_daily_electrical_consumption": {
+      "entity_id": "sensor.aircobureau_climatecontrol_heating_daily_electrical_consumption",
+      "device_id": "b3c142f866d764ea96b67e60a15a8f64",
+      "labels": [],
+      "translation_key": "heatingdailyelectricalconsumption",
+      "platform": "daikin_onecta",
+      "has_entity_name": true,
+      "name": "Dagelijks elektriciteitsverbruik verwarmen",
+      "display_precision": 2
+    },
+    "sensor.shellyemhuis_em1_total_active_returned_energy": {
+      "entity_id": "sensor.shellyemhuis_em1_total_active_returned_energy",
+      "device_id": "80c440426908cb22323cdb8ad40d071b",
+      "labels": [],
+      "translation_key": "energy_returned",
+      "platform": "shelly",
+      "has_entity_name": true,
+      "name": "SolarHuisInjectiekWh",
+      "display_precision": 2
+    },
+    "sensor.aircoslaapkamer_climatecontrol_cooling_daily_electrical_consumption": {
+      "entity_id": "sensor.aircoslaapkamer_climatecontrol_cooling_daily_electrical_consumption",
+      "device_id": "99968bfbda401460e846d9f174f7391a",
+      "labels": [],
+      "translation_key": "coolingdailyelectricalconsumption",
+      "platform": "daikin_onecta",
+      "has_entity_name": true,
+      "name": "Dagelijks elektriciteitsverbruik koelen",
+      "display_precision": 2
+    },
+    "sensor.aircoslaapkamer_climatecontrol_heating_daily_electrical_consumption": {
+      "entity_id": "sensor.aircoslaapkamer_climatecontrol_heating_daily_electrical_consumption",
+      "device_id": "99968bfbda401460e846d9f174f7391a",
+      "labels": [],
+      "translation_key": "heatingdailyelectricalconsumption",
+      "platform": "daikin_onecta",
+      "has_entity_name": true,
+      "name": "Dagelijks elektriciteitsverbruik verwarmen",
+      "display_precision": 2
+    },
+    "sensor.aircowoonkamer_climatecontrol_heating_daily_electrical_consumption": {
+      "entity_id": "sensor.aircowoonkamer_climatecontrol_heating_daily_electrical_consumption",
+      "device_id": "d879de446cf352f36db02c27fc4a3ded",
+      "labels": [],
+      "translation_key": "heatingdailyelectricalconsumption",
+      "platform": "daikin_onecta",
+      "has_entity_name": true,
+      "name": "Dagelijks elektriciteitsverbruik verwarmen",
+      "display_precision": 2
     },
     "sensor.shellyemtuin_em0_total_active_returned_energy": {
       "entity_id": "sensor.shellyemtuin_em0_total_active_returned_energy",
-      "state": "872.33535",
-      "attributes": {
-        "state_class": "total_increasing",
-        "unit_of_measurement": "kWh",
-        "device_class": "energy",
-        "friendly_name": "SolarTuinInjectiekWh"
-      },
-      "context": {
-        "id": "01KVV1WJKPYDS2ZMM74JPWKEJ9",
-        "parent_id": null,
-        "user_id": null
-      },
-      "last_changed": "2026-06-23T20:14:00.822Z",
-      "last_updated": "2026-06-23T20:14:00.822Z"
+      "device_id": "b2f77083deca688ca523a09799765f11",
+      "labels": [],
+      "translation_key": "energy_returned",
+      "platform": "shelly",
+      "has_entity_name": true,
+      "name": "SolarTuinInjectiekWh",
+      "display_precision": 2
     },
+    "sensor.shellyemhuis_em0_total_active_energy": {
+      "entity_id": "sensor.shellyemhuis_em0_total_active_energy",
+      "device_id": "2f598e91a09d623dc7df0c041a83b6de",
+      "labels": [],
+      "platform": "shelly",
+      "has_entity_name": true,
+      "name": "LaadpaalVerbruikkWH",
+      "icon": "mdi:ev-plug-type2",
+      "display_precision": 2
+    },
+    "sensor.aircowoonkamer_climatecontrol_cooling_daily_electrical_consumption": {
+      "entity_id": "sensor.aircowoonkamer_climatecontrol_cooling_daily_electrical_consumption",
+      "device_id": "d879de446cf352f36db02c27fc4a3ded",
+      "labels": [],
+      "translation_key": "coolingdailyelectricalconsumption",
+      "platform": "daikin_onecta",
+      "has_entity_name": true,
+      "name": "Dagelijks elektriciteitsverbruik koelen",
+      "display_precision": 2
+    }
+  },
+  "states": {
     "sensor.shellyemhuis_em2_total_active_returned_energy": {
       "entity_id": "sensor.shellyemhuis_em2_total_active_returned_energy",
-      "state": "2638.86875",
+      "state": "2653.78073",
       "attributes": {
         "state_class": "total_increasing",
         "unit_of_measurement": "kWh",
@@ -363,47 +406,260 @@
         "friendly_name": "AfnameHuisInjectiekWh"
       },
       "context": {
-        "id": "01KVV3YGVF7CP69X209QTDSPP1",
+        "id": "01KW6T3S7CNJEA2G22SR7DPJ9Z",
         "parent_id": null,
         "user_id": null
       },
-      "last_changed": "2026-06-23T20:50:01.711Z",
-      "last_updated": "2026-06-23T20:50:01.711Z"
+      "last_changed": "2026-06-28T09:49:01.548Z",
+      "last_updated": "2026-06-28T09:49:01.548Z"
     },
     "sensor.shellyemhuis_em2_total_active_returned_energy_compensation": {
       "entity_id": "sensor.shellyemhuis_em2_total_active_returned_energy_compensation",
-      "state": "0.947594000000028",
+      "state": "0.000820999999996274",
       "attributes": {
         "state_class": "total",
-        "last_reset": "2026-06-21T12:00:00.233066+00:00",
+        "last_reset": "2026-06-28T08:39:24.367422+00:00",
         "unit_of_measurement": "EUR",
         "device_class": "monetary",
-        "friendly_name": "AfnameHuisInjectiekWh Compensation"
+        "friendly_name": "sensor Compensation"
       },
       "context": {
-        "id": "01KVV3YGVG5VA1NXF2WDH2FB18",
+        "id": "01KW6T3S7DD84SAXCSF263NXYX",
         "parent_id": null,
         "user_id": null
       },
-      "last_changed": "2026-06-23T20:50:01.712Z",
-      "last_updated": "2026-06-23T20:50:01.712Z"
+      "last_changed": "2026-06-28T09:49:01.549Z",
+      "last_updated": "2026-06-28T09:49:01.549Z"
     },
-    "sensor.gx_device_dc_battery_discharge_energy": {
-      "entity_id": "sensor.gx_device_dc_battery_discharge_energy",
-      "state": "30.165",
+    "sensor.aircobureau_climatecontrol_cooling_daily_electrical_consumption": {
+      "entity_id": "sensor.aircobureau_climatecontrol_cooling_daily_electrical_consumption",
+      "state": "0.2",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "icon": "mdi:snowflake",
+        "friendly_name": "AircoBureau ClimateControl Dagelijks elektriciteitsverbruik koelen"
+      },
+      "context": {
+        "id": "01KW6P4APSGPSRZ0GH14PM1574",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-28T08:39:25.145Z",
+      "last_updated": "2026-06-28T08:39:25.145Z"
+    },
+    "sensor.jk_bms_id_512_charged_energy": {
+      "entity_id": "sensor.jk_bms_id_512_charged_energy",
+      "state": "2543.2",
       "attributes": {
         "state_class": "total",
         "unit_of_measurement": "kWh",
         "device_class": "energy",
-        "friendly_name": "GX Device DC battery discharge energy"
+        "friendly_name": "JK-BMS (ID: 512) Charged energy"
       },
       "context": {
-        "id": "01KVV3Z4Q21ZMS8AKR7MV96PWY",
+        "id": "01KW6SVMH1HPZT41RXBVVAXH47",
         "parent_id": null,
         "user_id": null
       },
-      "last_changed": "2026-06-23T20:50:22.050Z",
-      "last_updated": "2026-06-23T20:50:22.050Z"
+      "last_changed": "2026-06-28T09:44:34.593Z",
+      "last_updated": "2026-06-28T09:44:34.593Z"
+    },
+    "sensor.jk_bms_id_512_discharged_energy": {
+      "entity_id": "sensor.jk_bms_id_512_discharged_energy",
+      "state": "2483.3",
+      "attributes": {
+        "state_class": "total",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "friendly_name": "JK-BMS (ID: 512) Discharged energy"
+      },
+      "context": {
+        "id": "01KW6P4C99SDQBTYP37VW8YKJW",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-28T08:39:26.761Z",
+      "last_updated": "2026-06-28T08:39:26.761Z"
+    },
+    "sensor.shellyemhuis_em2_total_active_energy_cost": {
+      "entity_id": "sensor.shellyemhuis_em2_total_active_energy_cost",
+      "state": "0.021027999999751",
+      "attributes": {
+        "state_class": "total",
+        "last_reset": "2026-06-28T08:39:24.367239+00:00",
+        "unit_of_measurement": "EUR",
+        "device_class": "monetary",
+        "friendly_name": "sensor Cost"
+      },
+      "context": {
+        "id": "01KW6T3S7D1JT240THFDYGXMZG",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-28T09:49:01.549Z",
+      "last_updated": "2026-06-28T09:49:01.549Z"
+    },
+    "sensor.shellyemhuis_em2_total_active_energy": {
+      "entity_id": "sensor.shellyemhuis_em2_total_active_energy",
+      "state": "10184.42744",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "icon": "mdi:transmission-tower-export",
+        "friendly_name": "AfnameHuisVerbruikkWh"
+      },
+      "context": {
+        "id": "01KW6T3S7CF1W7RMAS5C2K8PBD",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-28T09:49:01.548Z",
+      "last_updated": "2026-06-28T09:49:01.548Z"
+    },
+    "sensor.aircobureau_climatecontrol_heating_daily_electrical_consumption": {
+      "entity_id": "sensor.aircobureau_climatecontrol_heating_daily_electrical_consumption",
+      "state": "0",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "icon": "mdi:fire",
+        "friendly_name": "AircoBureau ClimateControl Dagelijks elektriciteitsverbruik verwarmen"
+      },
+      "context": {
+        "id": "01KW6P4APPH6W7EVR89PN5WCE2",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-28T08:39:25.142Z",
+      "last_updated": "2026-06-28T08:39:25.142Z"
+    },
+    "sensor.shellyemhuis_em1_total_active_returned_energy": {
+      "entity_id": "sensor.shellyemhuis_em1_total_active_returned_energy",
+      "state": "5093.21708",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "friendly_name": "SolarHuisInjectiekWh"
+      },
+      "context": {
+        "id": "01KW6T3S7C4RXKC72VV5NE029Q",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-28T09:49:01.548Z",
+      "last_updated": "2026-06-28T09:49:01.548Z"
+    },
+    "sensor.aircoslaapkamer_climatecontrol_cooling_daily_electrical_consumption": {
+      "entity_id": "sensor.aircoslaapkamer_climatecontrol_cooling_daily_electrical_consumption",
+      "state": "0.2",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "icon": "mdi:snowflake",
+        "friendly_name": "AircoSlaapkamer ClimateControl Dagelijks elektriciteitsverbruik koelen"
+      },
+      "context": {
+        "id": "01KW6P4APK4J4MJWAKFSXDBNJZ",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-28T08:39:25.139Z",
+      "last_updated": "2026-06-28T08:39:25.139Z"
+    },
+    "sensor.aircoslaapkamer_climatecontrol_heating_daily_electrical_consumption": {
+      "entity_id": "sensor.aircoslaapkamer_climatecontrol_heating_daily_electrical_consumption",
+      "state": "0",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "icon": "mdi:fire",
+        "friendly_name": "AircoSlaapkamer ClimateControl Dagelijks elektriciteitsverbruik verwarmen"
+      },
+      "context": {
+        "id": "01KW6P4APJYXGKPWAQ6EQSEGR1",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-28T08:39:25.138Z",
+      "last_updated": "2026-06-28T08:39:25.138Z"
+    },
+    "sensor.aircowoonkamer_climatecontrol_heating_daily_electrical_consumption": {
+      "entity_id": "sensor.aircowoonkamer_climatecontrol_heating_daily_electrical_consumption",
+      "state": "0",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "icon": "mdi:fire",
+        "friendly_name": "AircoWoonkamer ClimateControl Dagelijks elektriciteitsverbruik verwarmen"
+      },
+      "context": {
+        "id": "01KW6P4APFVGGQRK3N5MXTKFJM",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-28T08:39:25.135Z",
+      "last_updated": "2026-06-28T08:39:25.135Z"
+    },
+    "sensor.shellyemtuin_em0_total_active_returned_energy": {
+      "entity_id": "sensor.shellyemtuin_em0_total_active_returned_energy",
+      "state": "927.06813",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "friendly_name": "SolarTuinInjectiekWh"
+      },
+      "context": {
+        "id": "01KW6T4MJSCK1PS7PDKNAEWQ28",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-28T09:49:29.561Z",
+      "last_updated": "2026-06-28T09:49:29.561Z"
+    },
+    "sensor.shellyemhuis_em0_total_active_energy": {
+      "entity_id": "sensor.shellyemhuis_em0_total_active_energy",
+      "state": "5353.53068",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "icon": "mdi:ev-plug-type2",
+        "friendly_name": "LaadpaalVerbruikkWH"
+      },
+      "context": {
+        "id": "01KW6T3S77ZKSNCMQMJYYZJMFT",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-28T09:49:01.543Z",
+      "last_updated": "2026-06-28T09:49:01.543Z"
+    },
+    "sensor.aircowoonkamer_climatecontrol_cooling_daily_electrical_consumption": {
+      "entity_id": "sensor.aircowoonkamer_climatecontrol_cooling_daily_electrical_consumption",
+      "state": "1.5",
+      "attributes": {
+        "state_class": "total_increasing",
+        "unit_of_measurement": "kWh",
+        "device_class": "energy",
+        "icon": "mdi:snowflake",
+        "friendly_name": "AircoWoonkamer ClimateControl Dagelijks elektriciteitsverbruik koelen"
+      },
+      "context": {
+        "id": "01KW6T4HMR6XPPWSDQTVWHDCJP",
+        "parent_id": null,
+        "user_id": null
+      },
+      "last_changed": "2026-06-28T09:49:26.552Z",
+      "last_updated": "2026-06-28T09:49:26.552Z"
     }
   },
   "issues": {
@@ -414,6 +670,12 @@
       []
     ],
     "device_consumption": [
+      [],
+      [],
+      [],
+      [],
+      [],
+      [],
       []
     ],
     "device_consumption_water": []

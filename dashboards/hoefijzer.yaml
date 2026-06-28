@@ -1,78 +1,806 @@
 title: Hoefijzer
+background: var(--background-image)
 views:
-  - title: Energy
+  - type: sections
+    max_columns: 3
+    path: default_view
+    title: Home
+    icon: mdi:home
+    theme: hoefijzer_ios
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Nu
+            heading_style: title
+            icon: mdi:home-heart
+          - type: tile
+            entity: weather.forecast_thuis
+            name: Weer
+            icon: mdi:weather-partly-cloudy
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.time
+            name: Tijd
+            icon: mdi:clock-outline
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: device_tracker.stevehoefijzer
+            name: Steve
+            icon: mdi:account
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: person.maxime_de_cock
+            name: Maxime
+            icon: mdi:account
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+      - type: grid
+        cards:
+          - type: heading
+            heading: Snel naar
+            heading_style: title
+            icon: mdi:view-dashboard
+          - type: grid
+            square: false
+            columns: 2
+            cards:
+              - show_name: true
+                show_icon: true
+                type: button
+                name: Energie
+                icon: mdi:home-lightning-bolt
+                tap_action:
+                  action: navigate
+                  navigation_path: /hoefijzer-dashboard/energy
+              - show_name: true
+                show_icon: true
+                type: button
+                name: Klimaat
+                icon: mdi:air-conditioner
+                tap_action:
+                  action: navigate
+                  navigation_path: /hoefijzer-dashboard/klimaat
+              - show_name: true
+                show_icon: true
+                type: button
+                name: Verlichting
+                icon: mdi:lightbulb
+                tap_action:
+                  action: navigate
+                  navigation_path: /hoefijzer-dashboard/verlichting
+              - show_name: true
+                show_icon: true
+                type: button
+                name: Beveiliging
+                icon: mdi:security
+                tap_action:
+                  action: navigate
+                  navigation_path: /hoefijzer-dashboard/beveiliging
+      - type: grid
+        cards:
+          - type: heading
+            heading: Samenvatting
+            heading_style: title
+            icon: mdi:clipboard-pulse
+          - type: tile
+            entity: sensor.household_net_power_w
+            name: Net
+            icon: mdi:transmission-tower
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.jk_bms_id_512_charge
+            name: Batterij
+            icon: mdi:battery
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.aircowoonkamer_climatecontrol_room_temperature
+            name: Woonkamer
+            icon: mdi:thermometer
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: alarm_control_panel.blink_hoefijzer
+            name: Alarm
+            icon: mdi:shield-home
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: switch.garagestopcontact_schakelaar
+            name: Garage
+            icon: mdi:power-socket-eu
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.current_solar_production_w
+            name: Zon
+            icon: mdi:solar-power-variant
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.shellyemhuis_em0_power
+            name: Laadpaal
+            icon: mdi:ev-station
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: binary_sensor.hoefijzer_spa_in_use
+            name: Jacuzzi
+            icon: mdi:hot-tub
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: media-control
+            entity: media_player.hobbyruimte
+            grid_options:
+              columns: 12
+  - type: sections
+    max_columns: 4
+    title: Verlichting
+    path: verlichting
+    icon: mdi:lightbulb
+    theme: hoefijzer_ios
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Verlichting
+            heading_style: title
+            badges: []
+          - type: tile
+            entity: light.marmergarage
+            vertical: false
+            features_position: bottom
+            grid_options:
+              columns: full
+          - type: tile
+            entity: light.marmerwoonkamer
+            vertical: false
+            features_position: bottom
+            grid_options:
+              columns: full
+          - type: tile
+            entity: light.keuken
+            vertical: false
+            features_position: bottom
+            grid_options:
+              columns: full
+          - type: tile
+            entity: light.boekenkastlinks
+            vertical: false
+            features_position: bottom
+            grid_options:
+              columns: full
+          - type: tile
+            entity: light.boekenkastrechts
+            vertical: false
+            features_position: bottom
+            grid_options:
+              columns: full
+          - type: tile
+            grid_options:
+              columns: full
+              rows: 1
+            entity: switch.shelly_licht_tuin_switch_0
+            vertical: false
+            tap_action:
+              action: toggle
+            features_position: bottom
+      - type: grid
+        cards:
+          - type: heading
+            heading_style: title
+            heading: Automatisering
+          - show_name: true
+            show_icon: true
+            type: button
+            name: Licht aan
+            icon: mdi:lightbulb
+            tap_action:
+              action: call-service
+              service: automation.trigger
+              service_data:
+                entity_id: automation.licht_woonkamer_aan
+            color: accent
+          - show_name: true
+            show_icon: true
+            type: button
+            name: Licht uit
+            icon: mdi:lightbulb
+            tap_action:
+              action: call-service
+              service: automation.trigger
+              service_data:
+                entity_id: automation.licht_woonkamer_uit
+            color: disabled
+    badges:
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: sensor.date_time
+  - type: sections
+    max_columns: 4
     path: energy
+    title: Energie
     icon: mdi:home-lightning-bolt
-    cards:
-      - type: entities
-        title: EV Charging
-        entities:
-          - entity: input_select.ev_charging_mode
-            name: Mode
-          - entity: input_number.ev_charging_battery_reserve
-            name: Battery reserve
-          - entity: number.alfen_max_station_current_2
-            name: Alfen max current
-          - entity: sensor.shellyemhuis_em0_power
-            name: Charger power
-          - entity: sensor.shellyemhuis_em0_total_active_energy
-            name: Charger energy
-      - type: entities
-        title: Grid And Solar
-        entities:
-          - entity: sensor.shellyemhuis_em2_power
-            name: Grid power
-          - entity: sensor.grid_power_2_minute_average
-            name: Grid power 2 min avg
-          - entity: sensor.shellyemhuis_em2_total_active_energy
-            name: Grid import
-          - entity: sensor.shellyemhuis_em2_total_active_returned_energy
-            name: Grid export
-          - entity: sensor.shellyemhuis_em1_power
-            name: Solar house
-          - entity: sensor.shellyemtuin_em0_power
-            name: Solar garden
-      - type: entities
-        title: Battery And Loads
-        entities:
-          - entity: sensor.gx_device_dc_battery_charge
-            name: Battery charge
-          - entity: sensor.gx_device_dc_battery_power
-            name: Battery power
-          - entity: binary_sensor.hoefijzer_spa_in_use
-            name: Jacuzzi active
-          - entity: timer.timer_jacuzzi
-            name: Jacuzzi priority timer
-      - type: history-graph
-        title: Energy Trend
-        hours_to_show: 6
-        entities:
-          - sensor.shellyemhuis_em2_power
-          - sensor.grid_power_2_minute_average
-          - sensor.shellyemhuis_em1_power
-          - sensor.shellyemtuin_em0_power
-          - sensor.gx_device_dc_battery_power
-  - title: Climate
-    path: climate
+    theme: hoefijzer_ios
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Vandaag
+            heading_style: title
+            icon: mdi:transmission-tower
+          - title: Energiedistributie
+            type: energy-distribution
+            link_dashboard: true
+          - show_current: true
+            show_forecast: true
+            type: weather-forecast
+            entity: weather.forecast_thuis
+            forecast_type: daily
+        column_span: 2
+      - type: grid
+        cards:
+          - type: heading
+            heading: Live vermogen
+            heading_style: title
+            icon: mdi:flash
+          - type: tile
+            entity: sensor.jk_bms_id_512_charge
+            name: Batterij
+            icon: mdi:battery
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.current_solar_production_w
+            name: Zonproductie
+            icon: mdi:solar-power-variant
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.jk_bms_id_512_power
+            name: Batterijvermogen
+            icon: mdi:battery-charging
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.household_net_power_w
+            name: Huis netto
+            icon: mdi:home-lightning-bolt
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.shellyemhuis_em0_power
+            name: Laadpaal
+            icon: mdi:ev-station
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 12
+      - type: grid
+        cards:
+          - type: heading
+            heading: EV laden
+            heading_style: title
+            icon: mdi:ev-station
+          - type: tile
+            entity: input_select.ev_charging_mode
+            name: Modus
+            icon: mdi:tune-variant
+            features:
+              - type: select-options
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 12
+          - type: tile
+            entity: input_number.ev_charging_battery_reserve
+            name: Batterijreserve
+            icon: mdi:battery-lock
+            features:
+              - type: numeric-input
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: number.alfen_max_station_current_2
+            name: Laadstroom
+            icon: mdi:current-ac
+            features:
+              - type: numeric-input
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.shellyemhuis_em0_power
+            name: Laadvermogen
+            icon: mdi:flash
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.shellyemhuis_em0_total_active_energy
+            name: Laadenergie
+            icon: mdi:counter
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+      - type: grid
+        cards:
+          - type: heading
+            heading: Net en zon
+            heading_style: title
+            icon: mdi:solar-power-variant
+          - type: tile
+            entity: sensor.grid_power_w
+            name: Netvermogen
+            icon: mdi:transmission-tower
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.grid_power_2_minute_average
+            name: Net 2 min.
+            icon: mdi:chart-line
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.solar_house_production_w
+            name: Zon huis
+            icon: mdi:solar-panel
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.solar_garden_production_w
+            name: Zon tuin
+            icon: mdi:solar-panel-large
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: entities
+            title: Meterstanden
+            show_header_toggle: false
+            entities:
+              - entity: sensor.shellyemhuis_em2_total_active_energy
+                name: Import
+              - entity: sensor.shellyemhuis_em2_total_active_returned_energy
+                name: Export
+      - type: grid
+        cards:
+          - type: heading
+            heading: Zonprognose
+            heading_style: title
+            icon: mdi:weather-sunny
+          - type: tile
+            entity: sensor.energy_production_today_remaining_total
+            name: Rest vandaag
+            icon: mdi:weather-sunset
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 4
+          - type: tile
+            entity: sensor.energy_production_today_total
+            name: Vandaag
+            icon: mdi:solar-power-variant
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 4
+          - type: tile
+            entity: sensor.energy_production_tomorrow_total
+            name: Morgen
+            icon: mdi:weather-sunny
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Batterij en verbruikers
+            heading_style: title
+            icon: mdi:home-battery
+          - type: tile
+            entity: sensor.jk_bms_id_512_charge
+            name: Batterijlading
+            icon: mdi:battery
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.jk_bms_id_512_power
+            name: Batterijvermogen
+            icon: mdi:battery-charging
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: binary_sensor.hoefijzer_spa_in_use
+            name: Jacuzzi actief
+            icon: mdi:hot-tub
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: timer.timer_jacuzzi
+            name: Jacuzzi prioriteit
+            icon: mdi:timer-outline
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+      - type: grid
+        cards:
+          - type: heading
+            heading: Energie trend
+            heading_style: title
+            icon: mdi:chart-areaspline
+          - type: history-graph
+            title: Laatste 6 uur
+            hours_to_show: 6
+            entities:
+              - sensor.household_net_power_w
+              - sensor.current_solar_production_w
+              - sensor.grid_power_2_minute_average
+              - sensor.solar_house_production_w
+              - sensor.solar_garden_production_w
+              - sensor.jk_bms_id_512_power
+        column_span: 4
+    header:
+      layout: start
+      badges_position: top
+      badges_wrap: wrap
+    badges:
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: sensor.sun_next_dawn
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: input_select.ev_charging_mode
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.grid_power_w
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.jk_bms_id_512_charge
+  - type: sections
+    max_columns: 4
+    title: Klimaat
+    path: klimaat
     icon: mdi:air-conditioner
-    cards:
-      - type: entities
-        title: Airco Mode
-        entities:
-          - entity: input_select.airco_mode
-            name: Mode
-          - entity: timer.timer_airco_bureau_koelen
-            name: Bureau timer
-          - entity: timer.timer_airco_slaapkamer_koelen
-            name: Slaapkamer timer
-          - entity: timer.timer_airco_woonkamer_koelen
-            name: Woonkamer timer
-      - type: thermostat
-        entity: climate.aircobureau_room_temperature
-        name: Bureau
-      - type: thermostat
-        entity: climate.aircoslaapkamer_room_temperature
-        name: Slaapkamer
-      - type: thermostat
-        entity: climate.aircowoonkamer_room_temperature
-        name: Woonkamer
+    theme: hoefijzer_ios
+    sections:
+      - type: grid
+        cards:
+          - features:
+              - type: climate-hvac-modes
+              - type: climate-fan-modes
+                style: dropdown
+              - type: climate-swing-modes
+                style: dropdown
+              - type: climate-swing-horizontal-modes
+                style: dropdown
+              - type: target-temperature
+            type: tile
+            entity: climate.aircobureau_room_temperature
+            features_position: bottom
+            vertical: true
+            show_entity_picture: true
+            state_content:
+              - temperature
+              - current_temperature
+            icon: mdi:air-conditioner
+            grid_options:
+              columns: 4
+              rows: 7
+          - features:
+              - type: climate-hvac-modes
+              - type: climate-fan-modes
+                style: dropdown
+              - type: climate-swing-modes
+                style: dropdown
+              - type: climate-swing-horizontal-modes
+                style: dropdown
+              - type: target-temperature
+            type: tile
+            entity: climate.aircowoonkamer_room_temperature
+            features_position: bottom
+            vertical: true
+            show_entity_picture: true
+            state_content:
+              - temperature
+              - current_temperature
+            icon: mdi:air-conditioner
+            grid_options:
+              columns: 4
+              rows: 7
+          - features:
+              - type: climate-hvac-modes
+              - type: climate-fan-modes
+                style: dropdown
+              - type: climate-swing-modes
+                style: dropdown
+              - type: climate-swing-horizontal-modes
+                style: dropdown
+              - type: target-temperature
+            type: tile
+            entity: climate.aircoslaapkamer_room_temperature
+            features_position: bottom
+            vertical: true
+            show_entity_picture: true
+            state_content:
+              - temperature
+              - current_temperature
+            icon: mdi:air-conditioner
+            grid_options:
+              columns: 4
+              rows: 7
+          - type: tile
+            grid_options:
+              columns: 12
+              rows: 2
+            entity: switch.shellyventilatorswitch
+            name: Tuinhuis ventilatie
+            vertical: false
+            tap_action:
+              action: toggle
+            features_position: bottom
+        column_span: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Slimme regeling
+            heading_style: title
+            icon: mdi:thermostat-auto
+          - type: entities
+            title: Airco modus
+            show_header_toggle: false
+            entities:
+              - entity: input_select.airco_mode
+                name: Modus
+              - entity: timer.timer_airco_bureau_koelen
+                name: Bureau timer
+              - entity: timer.timer_airco_slaapkamer_koelen
+                name: Slaapkamer timer
+              - entity: timer.timer_airco_woonkamer_koelen
+                name: Woonkamer timer
+          - type: tile
+            entity: automation.airco_bureau_start_koelen_boven_25degc
+            name: Bureau auto-koelen
+            icon: mdi:office-building
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 4
+          - type: tile
+            entity: automation.airco_woonkamer_start_koelen_boven_25degc
+            name: Woonkamer auto-koelen
+            icon: mdi:sofa
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 4
+          - type: tile
+            entity: automation.airco_slaapkamer_start_koelen_boven_25degc
+            name: Slaapkamer auto-koelen
+            icon: mdi:bed
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 4
+        column_span: 4
+      - type: grid
+        cards:
+          - type: heading
+            heading: Verbruik vandaag
+            heading_style: title
+            icon: mdi:lightning-bolt
+          - type: tile
+            entity: sensor.airco_today_total
+            name: Airco totaal
+            icon: mdi:air-conditioner
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 12
+          - type: entities
+            title: Per ruimte
+            show_header_toggle: false
+            entities:
+              - entity: sensor.airco_bureau_today_total
+                name: Bureau totaal
+              - entity: sensor.aircobureau_climatecontrol_cooling_daily_electrical_consumption
+                name: Bureau koelen
+              - entity: sensor.aircobureau_climatecontrol_heating_daily_electrical_consumption
+                name: Bureau verwarmen
+              - type: divider
+              - entity: sensor.airco_woonkamer_today_total
+                name: Woonkamer totaal
+              - entity: sensor.aircowoonkamer_climatecontrol_cooling_daily_electrical_consumption
+                name: Woonkamer koelen
+              - entity: sensor.aircowoonkamer_climatecontrol_heating_daily_electrical_consumption
+                name: Woonkamer verwarmen
+              - type: divider
+              - entity: sensor.airco_slaapkamer_today_total
+                name: Slaapkamer totaal
+              - entity: sensor.aircoslaapkamer_climatecontrol_cooling_daily_electrical_consumption
+                name: Slaapkamer koelen
+              - entity: sensor.aircoslaapkamer_climatecontrol_heating_daily_electrical_consumption
+                name: Slaapkamer verwarmen
+        column_span: 4
+    header:
+      layout: start
+      badges_position: top
+      badges_wrap: wrap
+    badges:
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aircowoonkamer_climatecontrol_room_temperature
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: sensor.aircowoonkamer_climatecontrol_outdoor_temperature
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: automation.airco_bureau_start_koelen_boven_25degc
+        show_entity_picture: true
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: automation.airco_slaapkamer_start_koelen_boven_25degc
+      - type: entity
+        show_name: true
+        show_state: true
+        show_icon: true
+        entity: automation.airco_woonkamer_start_koelen_boven_25degc
+      - type: entity
+        show_name: false
+        show_state: true
+        show_icon: true
+        entity: switch.shellyventilatorswitch
+  - type: sections
+    max_columns: 2
+    title: Beveiliging
+    path: beveiliging
+    icon: mdi:security
+    theme: hoefijzer_ios
+    sections:
+      - type: grid
+        cards:
+          - type: heading
+            heading: Status
+            heading_style: title
+            icon: mdi:shield-home
+          - type: tile
+            entity: alarm_control_panel.blink_hoefijzer
+            name: Alarm
+            icon: mdi:shield-home
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: tile
+            entity: sensor.time
+            name: Tijd
+            icon: mdi:clock-outline
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+          - type: heading
+            heading: Camera's
+            heading_style: subtitle
+            icon: mdi:cctv
+          - type: tile
+            grid_options:
+              columns: full
+              rows: 1
+            entity: camera.inkom
+            show_entity_picture: true
+            state_content:
+              - motion_detection
+              - temperature_c
+              - battery
+            vertical: false
+            features_position: bottom
+          - type: tile
+            grid_options:
+              columns: full
+            entity: camera.garage
+            show_entity_picture: true
+            state_content:
+              - motion_detection
+              - temperature_c
+              - battery
+            vertical: false
+            features_position: bottom
+          - type: tile
+            grid_options:
+              columns: full
+            entity: camera.huiskamer
+            show_entity_picture: true
+            state_content: motion_detection
+            vertical: false
+            features_position: bottom
+          - type: tile
+            grid_options:
+              columns: full
+            entity: camera.tuin
+            show_entity_picture: true
+            state_content:
+              - motion_detection
+              - temperature_c
+              - battery
+            vertical: false
+            features_position: bottom
+        column_span: 2
+    header:
+      layout: start
+      badges_position: top
+      badges_wrap: wrap

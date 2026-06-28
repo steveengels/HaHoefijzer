@@ -23,11 +23,140 @@ automation: !include automations.yaml
 scene: !include scenes.yaml
 script: !include scripts.yaml
 
+template:
+  - sensor:
+      - name: Grid power W
+        unique_id: grid_power_w
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        state: >
+          {% set value = states('sensor.shellyemhuis_em2_power') | float(0) %}
+          {% set unit = state_attr('sensor.shellyemhuis_em2_power', 'unit_of_measurement') %}
+          {{ (value * 1000 if unit == 'kW' else value) | round(0) }}
+      - name: Current solar production W
+        unique_id: current_solar_production_w
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        state: >
+          {% set house_value = states('sensor.shellyemhuis_em1_power') | float(0) %}
+          {% set house_unit = state_attr('sensor.shellyemhuis_em1_power', 'unit_of_measurement') %}
+          {% set garden_value = states('sensor.shellyemtuin_em0_power') | float(0) %}
+          {% set garden_unit = state_attr('sensor.shellyemtuin_em0_power', 'unit_of_measurement') %}
+          {% set house_w = house_value * 1000 if house_unit == 'kW' else house_value %}
+          {% set garden_w = garden_value * 1000 if garden_unit == 'kW' else garden_value %}
+          {{ ([0, 0 - house_w - garden_w] | max) | round(0) }}
+      - name: Solar house production W
+        unique_id: solar_house_production_w
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        state: >
+          {% set value = states('sensor.shellyemhuis_em1_power') | float(0) %}
+          {% set unit = state_attr('sensor.shellyemhuis_em1_power', 'unit_of_measurement') %}
+          {% set watts = value * 1000 if unit == 'kW' else value %}
+          {{ ([0, 0 - watts] | max) | round(0) }}
+      - name: Solar garden production W
+        unique_id: solar_garden_production_w
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        state: >
+          {% set value = states('sensor.shellyemtuin_em0_power') | float(0) %}
+          {% set unit = state_attr('sensor.shellyemtuin_em0_power', 'unit_of_measurement') %}
+          {% set watts = value * 1000 if unit == 'kW' else value %}
+          {{ ([0, 0 - watts] | max) | round(0) }}
+      - name: Household net power W
+        unique_id: household_net_power_w
+        unit_of_measurement: W
+        device_class: power
+        state_class: measurement
+        state: "{{ states('sensor.grid_power_w') | float(0) | round(0) }}"
+      - name: Energy production today remaining total
+        unique_id: energy_production_today_remaining_total
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: measurement
+        state: >
+          {{ (
+            states('sensor.energy_production_today_remaining_huis') | float(0) +
+            states('sensor.energy_production_today_remaining_tuin') | float(0)
+          ) | round(2) }}
+      - name: Energy production today total
+        unique_id: energy_production_today_total
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: measurement
+        state: >
+          {{ (
+            states('sensor.energy_production_today_huis') | float(0) +
+            states('sensor.energy_production_today_tuin') | float(0)
+          ) | round(2) }}
+      - name: Energy production tomorrow total
+        unique_id: energy_production_tomorrow_total
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: measurement
+        state: >
+          {{ (
+            states('sensor.energy_production_tomorrow_huis') | float(0) +
+            states('sensor.energy_production_tomorrow_tuin') | float(0)
+          ) | round(2) }}
+      - name: Airco today total
+        unique_id: airco_today_total
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: measurement
+        state: >
+          {{ (
+            states('sensor.aircobureau_climatecontrol_cooling_daily_electrical_consumption') | float(0) +
+            states('sensor.aircobureau_climatecontrol_heating_daily_electrical_consumption') | float(0) +
+            states('sensor.aircoslaapkamer_climatecontrol_cooling_daily_electrical_consumption') | float(0) +
+            states('sensor.aircoslaapkamer_climatecontrol_heating_daily_electrical_consumption') | float(0) +
+            states('sensor.aircowoonkamer_climatecontrol_cooling_daily_electrical_consumption') | float(0) +
+            states('sensor.aircowoonkamer_climatecontrol_heating_daily_electrical_consumption') | float(0)
+          ) | round(2) }}
+      - name: Airco bureau today total
+        unique_id: airco_bureau_today_total
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: measurement
+        state: >
+          {{ (
+            states('sensor.aircobureau_climatecontrol_cooling_daily_electrical_consumption') | float(0) +
+            states('sensor.aircobureau_climatecontrol_heating_daily_electrical_consumption') | float(0)
+          ) | round(2) }}
+      - name: Airco woonkamer today total
+        unique_id: airco_woonkamer_today_total
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: measurement
+        state: >
+          {{ (
+            states('sensor.aircowoonkamer_climatecontrol_cooling_daily_electrical_consumption') | float(0) +
+            states('sensor.aircowoonkamer_climatecontrol_heating_daily_electrical_consumption') | float(0)
+          ) | round(2) }}
+      - name: Airco slaapkamer today total
+        unique_id: airco_slaapkamer_today_total
+        unit_of_measurement: kWh
+        device_class: energy
+        state_class: measurement
+        state: >
+          {{ (
+            states('sensor.aircoslaapkamer_climatecontrol_cooling_daily_electrical_consumption') | float(0) +
+            states('sensor.aircoslaapkamer_climatecontrol_heating_daily_electrical_consumption') | float(0)
+          ) | round(2) }}
+
 sensor:
+  - platform: time_date
+    display_options:
+      - time
+      - date_time
   - platform: filter
     name: Grid power 2 minute average
     unique_id: grid_power_2_minute_average
-    entity_id: sensor.shellyemhuis_em2_power
+    entity_id: sensor.grid_power_w
     filters:
       - filter: time_simple_moving_average
         window_size: "00:02"
@@ -35,17 +164,11 @@ sensor:
 
 lovelace:
   dashboards:
-    overview-dashboard:
-      mode: yaml
-      title: Hoefijzer
-      icon: mdi:home-lightning-bolt
-      show_in_sidebar: true
-      filename: dashboards/overview.yaml
     hoefijzer-dashboard:
       mode: yaml
       title: Hoefijzer
       icon: mdi:home-lightning-bolt
-      show_in_sidebar: false
+      show_in_sidebar: true
       filename: dashboards/hoefijzer.yaml
 
 input_boolean:
@@ -112,6 +235,10 @@ timer:
     name: timer_tuinlicht_jacuzzi
     duration: "00:10:00"
     icon: mdi:outdoor-lamp
+  timer_handdoekradiator_badkamer:
+    name: timer_handdoekradiator_badkamer
+    duration: "00:30:00"
+    icon: mdi:radiator
   timer_tuinhuis_ventilatie:
     name: timer_tuinhuis_ventilatie
     duration: "00:15:00"

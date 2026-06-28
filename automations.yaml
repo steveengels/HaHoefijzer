@@ -1,6 +1,6 @@
 - alias: Airco Bureau - Start koelen boven 25°C
   id: airco_bureau_startkoelen
-  description: Start de airco op koelen bij 23°C als het warmer is dan 25°C en start een timer van 30 minuten
+  description: Start de airco op koelen bij 23 degC als het warmer is dan 25 degC en start een timer van 30 minuten
   trigger:
     - platform: numeric_state
       entity_id: sensor.aircobureau_climatecontrol_room_temperature
@@ -62,7 +62,7 @@
   mode: single
 - alias: Airco Slaapkamer - Start koelen boven 25°C
   id: airco_slaapkamer_startkoelen
-  description: Start de airco op koelen bij 23°C als het warmer is dan 25°C en start een timer van 30 minuten
+  description: Start de airco op koelen bij 23 degC als het warmer is dan 25 degC en start een timer van 30 minuten
   trigger:
     - platform: numeric_state
       entity_id: sensor.aircoslaapkamer_climatecontrol_room_temperature
@@ -124,7 +124,7 @@
   mode: single
 - alias: Airco Woonkamer - Start koelen boven 25°C
   id: airco_woonkamer_startkoelen
-  description: Start de airco op koelen bij 23°C als het warmer is dan 25°C en start een timer van 30 minuten
+  description: Start de airco op koelen bij 23 degC als het warmer is dan 25 degC en start een timer van 30 minuten
   trigger:
     - platform: numeric_state
       entity_id: sensor.aircowoonkamer_climatecontrol_room_temperature
@@ -209,7 +209,7 @@
   mode: single
 - alias: Ventilatie tuinhuis schema
   id: ventilate_garden_shed_schedule
-  description: Ventilate the shed for 15 minutes if temp is > 15°C or the sensor is unavailable.
+  description: Ventilate the shed for 15 minutes if temp is > 15 degC or the sensor is unavailable.
   trigger:
     # Trigger : Every hour
     - platform: time_pattern
@@ -218,7 +218,7 @@
   condition:
     - condition: or
       conditions:
-        # Condition: Temp > 15°C
+        # Condition: Temp > 15 degC
         - condition: numeric_state
           entity_id: sensor.aircowoonkamer_climatecontrol_outdoor_temperature
           above: 15
@@ -367,10 +367,13 @@
         - input_number.ev_charging_battery_reserve
         - binary_sensor.hoefijzer_spa_in_use
         - timer.timer_jacuzzi
-        - sensor.gx_device_dc_battery_charge
+        - sensor.jk_bms_id_512_charge
     - platform: numeric_state
       entity_id: sensor.grid_power_2_minute_average
       above: 900
+    - platform: numeric_state
+      entity_id: sensor.grid_power_w
+      above: 8000
     - platform: numeric_state
       entity_id: sensor.grid_power_2_minute_average
       below: -700
@@ -386,7 +389,8 @@
     - variables:
         mode: "{{ states('input_select.ev_charging_mode') }}"
         grid_power_w: "{{ states('sensor.grid_power_2_minute_average') | float(0) }}"
-        battery_soc: "{{ states('sensor.gx_device_dc_battery_charge') | float(0) }}"
+        instant_grid_power_w: "{{ states('sensor.grid_power_w') | float(0) }}"
+        battery_soc: "{{ states('sensor.jk_bms_id_512_charge') | float(0) }}"
         battery_reserve: "{{ states('input_number.ev_charging_battery_reserve') | float(55) }}"
         current_limit: "{{ states('number.alfen_max_station_current_2') | float(8) }}"
         jacuzzi_priority: >
@@ -401,15 +405,19 @@
             12
           {% elif grid_power_w < -1500 %}
             10
-          {% elif grid_power_w < -700 %}
+          {% elif grid_power_w < -1300 %}
             8
+          {% elif grid_power_w < -700 %}
+            6
           {% elif grid_power_w > 900 %}
-            {{ [8, current_limit - 2] | max | int }}
+            {{ [6, current_limit - 2] | max | int }}
           {% else %}
             {{ current_limit | int }}
           {% endif %}
         target_amps: >
-          {% if jacuzzi_priority %}
+          {% if instant_grid_power_w > 8000 %}
+            6
+          {% elif jacuzzi_priority %}
             8
           {% elif mode == 'Paused' %}
             6
@@ -418,7 +426,7 @@
           {% elif mode == 'Normal' %}
             {{ 16 if now().hour < 18 else 8 }}
           {% elif mode == 'Solar' %}
-            {{ 8 if battery_soc < battery_reserve else solar_amps | int }}
+            {{ 6 if battery_soc < battery_reserve else solar_amps | int }}
           {% else %}
             8
           {% endif %}
@@ -614,6 +622,35 @@
       target:
         entity_id: switch.shelly_licht_tuin_switch_0
 
+  mode: single
+- alias: Handdoekradiator badkamer aan na Jacuzzi
+  id: handdoekradiator_badkamer_aan_na_jacuzzi
+  description: Warm the bathroom towel rack for 30 minutes after the jacuzzi has been used.
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.hoefijzer_spa_in_use
+      from: "on"
+      to: "off"
+  action:
+    - service: switch.turn_on
+      target:
+        entity_id: switch.plug_badkamer
+    - service: timer.start
+      target:
+        entity_id: timer.timer_handdoekradiator_badkamer
+  mode: restart
+- alias: Handdoekradiator badkamer uit na timer
+  id: handdoekradiator_badkamer_uit_na_timer
+  description: Turn off the bathroom towel rack when the 30-minute post-jacuzzi timer finishes.
+  trigger:
+    - platform: event
+      event_type: timer.finished
+      event_data:
+        entity_id: timer.timer_handdoekradiator_badkamer
+  action:
+    - service: switch.turn_off
+      target:
+        entity_id: switch.plug_badkamer
   mode: single
 - alias: Alexa - Living room lights on
   id: alexa_living_room_lights_on
