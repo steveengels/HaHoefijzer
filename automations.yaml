@@ -597,9 +597,20 @@
   id: licht_tuin_uit_jacuzzi
   trigger:
     - platform: state
-      entity_id: binary_sensor.hoefijzer_spa_in_use
+      entity_id:
+        - fan.hoefijzer_pump_1
+        - fan.hoefijzer_pump_2
       to: "off"
-
+  condition:
+    - condition: state
+      entity_id: switch.shelly_licht_tuin_switch_0
+      state: "on"
+    - condition: state
+      entity_id: fan.hoefijzer_pump_1
+      state: "off"
+    - condition: state
+      entity_id: fan.hoefijzer_pump_2
+      state: "off"
   action:
     - service: timer.start
       target:
@@ -615,7 +626,10 @@
         entity_id: timer.timer_tuinlicht_jacuzzi
   condition:
     - condition: state
-      entity_id: binary_sensor.hoefijzer_spa_in_use
+      entity_id: fan.hoefijzer_pump_1
+      state: "off"
+    - condition: state
+      entity_id: fan.hoefijzer_pump_2
       state: "off"
   action:
     - service: switch.turn_off
