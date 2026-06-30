@@ -1,5 +1,5 @@
 title: Hoefijzer
-background: linear-gradient(rgba(246, 248, 251, 0.58), rgba(246, 248, 251, 0.58)), center / cover no-repeat fixed url("https://cdn.jsdelivr.net/gh/basnijholt/lovelace-ios-themes@master/themes/homekit-bg-blue-red.jpg")
+background: linear-gradient(rgba(246, 248, 251, 0.42), rgba(246, 248, 251, 0.42)), url("https://cdn.jsdelivr.net/gh/basnijholt/lovelace-ios-themes@master/themes/homekit-bg-blue-red.jpg") center / cover no-repeat fixed
 views:
   - type: sections
     max_columns: 3
