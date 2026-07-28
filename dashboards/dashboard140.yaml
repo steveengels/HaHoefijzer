@@ -1,0 +1,291 @@
+kiosk_mode:
+  hide_header: true
+  hide_sidebar: true
+views:
+  - title: Home
+    path: home
+    icon: mdi:home
+    type: sections
+    max_columns: 2
+    swipe_nav: true
+    sections:
+      - type: grid
+        cards:
+          - type: button
+            name: MUZIEK
+            icon: mdi:music
+            show_state: true
+            tap_action:
+              action: navigate
+              navigation_path: audio
+            styles:
+              card:
+                - height: 150px
+          - type: button
+            name: LICHTEN
+            icon: mdi:lightbulb-group
+            show_state: true
+            tap_action:
+              action: navigate
+              navigation_path: lights
+            styles:
+              card:
+                - height: 150px
+          - type: button
+            name: ALARM
+            icon: mdi:shield-home
+            show_state: true
+            tap_action:
+              action: navigate
+              navigation_path: alarm
+            styles:
+              card:
+                - height: 150px
+          - type: button
+            name: KLIMAAT
+            icon: mdi:air-conditioner
+            entity: climate.aircowoonkamer_room_temperature
+            show_state: true
+            tap_action:
+              action: navigate
+              navigation_path: klimaat
+            styles:
+              card:
+                - height: 150px
+          - show_current: true
+            show_forecast: false
+            type: weather-forecast
+            entity: weather.forecast_thuis
+            forecast_type: daily
+            grid_options:
+              columns: 6
+              rows: 2
+          - type: tile
+            entity: sensor.huiskamer_shellywalldisplay_temperatuur
+            name: Temperatuur
+          - type: tile
+            entity: sensor.huiskamer_shellywalldisplay_luchtvochtigheid
+            name: Luchtvochtigheid
+    header:
+      layout: center
+      badges_position: bottom
+      badges_wrap: scroll
+  - title: Sonos
+    path: audio
+    icon: mdi:music
+    type: sections
+    max_columns: 1
+    sections:
+      - type: grid
+        cards:
+          - type: button
+            name: Radio Minerva
+            icon: mdi:radio
+            tap_action:
+              action: call-service
+              service: script.play_radio_minerva_hobbyruimte
+          - type: button
+            name: Studio Brussel
+            icon: mdi:radio
+            tap_action:
+              action: call-service
+              service: script.play_studio_brussel_hobbyruimte
+          - type: media-control
+            entity: media_player.hobbyruimte
+            grid_options:
+              columns: 12
+              rows: 4
+          - type: button
+            icon: mdi:volume-minus
+            tap_action:
+              action: call-service
+              service: media_player.volume_down
+              target:
+                entity_id: media_player.hobbyruimte
+          - type: button
+            icon: mdi:volume-plus
+            tap_action:
+              action: call-service
+              service: media_player.volume_up
+              target:
+                entity_id: media_player.hobbyruimte
+          - type: button
+            name: MUZIEK UIT
+            icon: mdi:speaker-off
+            tap_action:
+              action: call-service
+              service: media_player.turn_off
+              target:
+                entity_id: media_player.hobbyruimte
+            styles:
+              card:
+                - height: 140px
+          - type: button
+            name: ⬅ HOME
+            icon: mdi:home
+            tap_action:
+              action: navigate
+              navigation_path: home
+            styles:
+              card:
+                - height: 70px
+  - title: Alarm
+    path: alarm
+    icon: mdi:shield-home
+    type: sections
+    max_columns: 1
+    sections:
+      - type: grid
+        cards:
+          - type: button
+            name: ⬅ HOME
+            icon: mdi:home
+            tap_action:
+              action: navigate
+              navigation_path: home
+            styles:
+              card:
+                - height: 70px
+          - type: alarm-panel
+            entity: alarm_control_panel.blink_hoefijzer
+  - title: Lights
+    path: lights
+    icon: mdi:lightbulb-group
+    type: sections
+    max_columns: 1
+    sections:
+      - type: grid
+        cards:
+          - type: button
+            name: ⬅ HOME
+            icon: mdi:home
+            tap_action:
+              action: navigate
+              navigation_path: home
+            styles:
+              card:
+                - height: 70px
+          - type: button
+            name: ALLE LICHTEN AAN
+            icon: mdi:lightbulb-on
+            tap_action:
+              action: call-service
+              service: automation.trigger
+              target:
+                entity_id: automation.licht_woonkamer_aan
+            styles:
+              card:
+                - height: 140px
+          - type: button
+            name: ALLE LICHTEN UIT
+            icon: mdi:lightbulb-off
+            tap_action:
+              action: call-service
+              service: automation.trigger
+              target:
+                entity_id: automation.licht_woonkamer_uit
+            styles:
+              card:
+                - height: 140px
+  - title: Climate
+    path: klimaat
+    icon: mdi:air-conditioner
+    type: sections
+    max_columns: 1
+    sections:
+      - type: grid
+        cards:
+          - type: tile
+            grid_options:
+              columns: 6
+              rows: 1
+            entity: climate.aircowoonkamer_room_temperature
+            name:
+              - type: text
+                text: Klimaat
+              - type: device
+            show_entity_picture: false
+            hide_state: false
+            state_content:
+              - hvac_action
+              - temperature
+              - current_temperature
+            vertical: false
+            features_position: bottom
+          - type: tile
+            entity: sensor.huiskamer_shellywalldisplay_temperatuur
+            name: Temperatuur Shelly
+            vertical: false
+            features_position: bottom
+          - type: button
+            icon: mdi:fire
+            name: Heat
+            tap_action:
+              action: call-service
+              service: climate.set_hvac_mode
+              target:
+                entity_id: climate.aircowoonkamer_room_temperature
+              data:
+                hvac_mode: heat
+          - type: button
+            icon: mdi:snowflake
+            name: Cool
+            tap_action:
+              action: call-service
+              service: climate.set_hvac_mode
+              target:
+                entity_id: climate.aircowoonkamer_room_temperature
+              data:
+                hvac_mode: cool
+          - type: button
+            icon: mdi:power
+            name: 'Off'
+            tap_action:
+              action: call-service
+              service: climate.set_hvac_mode
+              target:
+                entity_id: climate.aircowoonkamer_room_temperature
+              data:
+                hvac_mode: 'off'
+          - type: tile
+            entity: climate.aircowoonkamer_room_temperature
+            name: Doeltemperatuur
+            features:
+              - type: target-temperature
+            features_position: bottom
+            vertical: false
+            grid_options:
+              columns: 6
+              rows: 2
+          - type: button
+            icon: mdi:water-percent
+            name: Dry
+            tap_action:
+              action: call-service
+              service: climate.set_hvac_mode
+              target:
+                entity_id: climate.aircowoonkamer_room_temperature
+              data:
+                hvac_mode: dry
+            grid_options:
+              columns: 3
+              rows: 2
+          - type: button
+            icon: mdi:fan
+            name: Fan
+            tap_action:
+              action: call-service
+              service: climate.set_hvac_mode
+              target:
+                entity_id: climate.aircowoonkamer_room_temperature
+              data:
+                hvac_mode: fan_only
+            grid_options:
+              columns: 3
+              rows: 2
+          - type: button
+            icon: mdi:home
+            name: Home
+            tap_action:
+              action: navigate
+              navigation_path: home
