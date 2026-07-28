@@ -65,26 +65,26 @@ start_airco_cycle:
     data:
       duration: '{{ runtime }}'
 
-play_radio_minerva_hobbyruimte:
-  alias: Speel Radio Minerva in hobbyruimte
+play_radio_minerva_huiskamer:
+  alias: Speel Radio Minerva in Huiskamer
   icon: mdi:radio
   mode: restart
   sequence:
     - action: media_player.play_media
       target:
-        entity_id: media_player.hobbyruimte
+        entity_id: media_player.huiskamer
       data:
         media_content_id: media-source://radio_browser/29c3799c-d7b8-49e0-a47c-143da177b90e
         media_content_type: audio/mpeg
 
-play_studio_brussel_hobbyruimte:
-  alias: Speel Studio Brussel in hobbyruimte
+play_studio_brussel_huiskamer:
+  alias: Speel Studio Brussel in Huiskamer
   icon: mdi:radio
   mode: restart
   sequence:
     - action: media_player.play_media
       target:
-        entity_id: media_player.hobbyruimte
+        entity_id: media_player.huiskamer
       data:
         media_content_id: media-source://radio_browser/fd2b3609-d95a-4e6a-aa50-e040e9836cf6
         media_content_type: audio/mpeg
