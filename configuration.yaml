@@ -209,28 +209,40 @@ timer:
   timer_airco_bureau_koelen:
     name: timer_airco_bureau_koelen
     duration: "00:30:00"
+    restore: true
     icon: mdi:air-conditioner
   timer_airco_slaapkamer_koelen:
     name: timer_airco_slaapkamer_koelen
     duration: "00:30:00"
+    restore: true
     icon: mdi:air-conditioner
   timer_airco_woonkamer_koelen:
     name: timer_airco_woonkamer_koelen
     duration: "00:30:00"
+    restore: true
     icon: mdi:air-conditioner
   timer_jacuzzi:
     name: timer_jacuzzi
     duration: "00:15:00"
+    restore: true
     icon: mdi:hot-tub
   timer_tuinlicht_jacuzzi:
     name: timer_tuinlicht_jacuzzi
     duration: "00:10:00"
+    restore: true
     icon: mdi:outdoor-lamp
+  timer_badkamer_start_na_jacuzzi:
+    name: timer_badkamer_start_na_jacuzzi
+    duration: "00:15:00"
+    restore: true
+    icon: mdi:timer-outline
   timer_handdoekradiator_badkamer:
     name: timer_handdoekradiator_badkamer
-    duration: "00:30:00"
+    duration: "00:15:00"
+    restore: true
     icon: mdi:radiator
   timer_tuinhuis_ventilatie:
     name: timer_tuinhuis_ventilatie
     duration: "00:15:00"
+    restore: true
     icon: mdi:fan

@@ -1,13 +1,13 @@
 - alias: Airco Bureau - Start koelen boven 25°C
   id: airco_bureau_startkoelen
-  description: Start de airco op koelen bij 23 degC als het warmer is dan 25 degC
-    en start een timer van 30 minuten
+  description: Koel het bureau alleen bij aanhoudende warmte en nooit na 19:00.
   trigger:
   - platform: numeric_state
     entity_id: sensor.aircobureau_climatecontrol_room_temperature
     above: 25
+    for: 00:10:00
   - platform: time_pattern
-    minutes: /15
+    minutes: 0
   - platform: state
     entity_id: input_select.airco_mode
   condition:
@@ -22,8 +22,8 @@
       entity_id: climate.aircobureau_room_temperature
       state: cool
   - condition: time
-    after: 07:00:00
-    before: '23:00:00'
+    after: 06:59:59
+    before: '19:00:00'
   action:
   - variables:
       target_temperature: '{{ 21 if is_state(''input_select.airco_mode'', ''Boost'')
@@ -31,15 +31,26 @@
       runtime: '{{ ''01:00:00'' if is_state(''input_select.airco_mode'', ''Boost'')
         else ''00:45:00'' if is_state(''input_select.airco_mode'', ''Comfort'') else
         ''00:30:00'' }}'
-  - service: climate.set_temperature
+  - service: script.start_airco_cycle
+    data:
+      climate_entity: climate.aircobureau_room_temperature
+      timer_entity: timer.timer_airco_bureau_koelen
+      target_temperature: '{{ target_temperature }}'
+      runtime: '{{ runtime }}'
+  mode: single
+- alias: Airco Bureau - Uit om 19 uur
+  id: airco_bureau_uit_om_19_uur
+  description: Zet de bureau-airco uit en annuleer de actieve koeltimer.
+  trigger:
+  - platform: time
+    at: '19:00:00'
+  action:
+  - service: climate.set_hvac_mode
     target:
       entity_id: climate.aircobureau_room_temperature
     data:
-      temperature: '{{ target_temperature | int }}'
-      hvac_mode: cool
-  - service: timer.start
-    data:
-      duration: '{{ runtime }}'
+      hvac_mode: 'off'
+  - service: timer.cancel
     target:
       entity_id: timer.timer_airco_bureau_koelen
   mode: single
@@ -66,8 +77,9 @@
   - platform: numeric_state
     entity_id: sensor.aircoslaapkamer_climatecontrol_room_temperature
     above: 25
+    for: 00:10:00
   - platform: time_pattern
-    minutes: /15
+    minutes: 0
   - platform: state
     entity_id: input_select.airco_mode
   condition:
@@ -82,7 +94,7 @@
       entity_id: climate.aircoslaapkamer_room_temperature
       state: cool
   - condition: time
-    after: '21:00:00'
+    after: '20:59:59'
     before: '23:59:59'
   action:
   - variables:
@@ -91,15 +103,26 @@
       runtime: '{{ ''01:00:00'' if is_state(''input_select.airco_mode'', ''Boost'')
         else ''00:45:00'' if is_state(''input_select.airco_mode'', ''Comfort'') else
         ''00:30:00'' }}'
-  - service: climate.set_temperature
+  - service: script.start_airco_cycle
+    data:
+      climate_entity: climate.aircoslaapkamer_room_temperature
+      timer_entity: timer.timer_airco_slaapkamer_koelen
+      target_temperature: '{{ target_temperature }}'
+      runtime: '{{ runtime }}'
+  mode: single
+- alias: Airco Slaapkamer - Uit om middernacht
+  id: airco_slaapkamer_uit_om_middernacht
+  description: Zet de slaapkamer-airco uit en annuleer de actieve koeltimer.
+  trigger:
+  - platform: time
+    at: 00:00:00
+  action:
+  - service: climate.set_hvac_mode
     target:
       entity_id: climate.aircoslaapkamer_room_temperature
     data:
-      temperature: '{{ target_temperature | int }}'
-      hvac_mode: cool
-  - service: timer.start
-    data:
-      duration: '{{ runtime }}'
+      hvac_mode: 'off'
+  - service: timer.cancel
     target:
       entity_id: timer.timer_airco_slaapkamer_koelen
   mode: single
@@ -126,8 +149,9 @@
   - entity_id:
     - sensor.aircowoonkamer_climatecontrol_room_temperature
     above: 26
+    for: 00:10:00
     trigger: numeric_state
-  - minutes: /15
+  - minutes: 0
     trigger: time_pattern
   - entity_id: input_select.airco_mode
     trigger: state
@@ -143,7 +167,7 @@
       entity_id: climate.aircowoonkamer_room_temperature
       state: cool
   - condition: time
-    after: 07:00:00
+    after: 06:59:59
     before: '23:00:00'
   actions:
   - variables:
@@ -152,17 +176,28 @@
       runtime: '{{ ''01:00:00'' if is_state(''input_select.airco_mode'', ''Boost'')
         else ''00:45:00'' if is_state(''input_select.airco_mode'', ''Comfort'') else
         ''00:30:00'' }}'
-  - target:
+  - action: script.start_airco_cycle
+    data:
+      climate_entity: climate.aircowoonkamer_room_temperature
+      timer_entity: timer.timer_airco_woonkamer_koelen
+      target_temperature: '{{ target_temperature }}'
+      runtime: '{{ runtime }}'
+  mode: single
+- alias: Airco Woonkamer - Uit om 23 uur
+  id: airco_woonkamer_uit_om_23_uur
+  description: Zet de woonkamer-airco uit en annuleer de actieve koeltimer.
+  trigger:
+  - platform: time
+    at: '23:00:00'
+  action:
+  - service: climate.set_hvac_mode
+    target:
       entity_id: climate.aircowoonkamer_room_temperature
     data:
-      temperature: '{{ target_temperature | int }}'
-      hvac_mode: cool
-    action: climate.set_temperature
-  - data:
-      duration: '{{ runtime }}'
+      hvac_mode: 'off'
+  - service: timer.cancel
     target:
       entity_id: timer.timer_airco_woonkamer_koelen
-    action: timer.start
   mode: single
 - alias: Airco - Mode off
   id: airco_mode_off
@@ -530,43 +565,38 @@
       entity_id:
       - switch.garagestopcontact_schakelaar
       - switch.shelly_licht_tuin_switch_0
+      - switch.plug_badkamer
     action: switch.turn_off
     data: {}
   mode: single
-- id: licht_tuin_aan_jacuzzi
-  alias: Licht tuin aan na aanzetten Jacuzzi
-  triggers:
-  - entity_id: binary_sensor.hoefijzer_spa_in_use
-    to: 'on'
-    trigger: state
-  conditions:
-  - condition: sun
-    after: sunset
-  actions:
-  - target:
-      entity_id: switch.shelly_licht_tuin_switch_0
-    action: switch.turn_on
-  - target:
-      entity_id: timer.timer_tuinlicht_jacuzzi
-    action: timer.start
-  mode: single
-- alias: Licht tuin uit 10 minuten na uitzetten Jacuzzi
-  id: licht_tuin_uit_jacuzzi
+- id: jacuzzi_gebruik_gestart
+  alias: Jacuzzi - Gebruik gestart
+  description: Reageer op het Jacuzzi-licht en plan de badkamerverwarming.
   trigger:
   - platform: state
-    entity_id:
-    - fan.hoefijzer_pump_1
-    - fan.hoefijzer_pump_2
+    entity_id: light.hoefijzer_light
+    to: 'on'
+  action:
+  - service: timer.cancel
+    target:
+      entity_id: timer.timer_tuinlicht_jacuzzi
+  - service: switch.turn_on
+    target:
+      entity_id: switch.shelly_licht_tuin_switch_0
+  - service: timer.start
+    target:
+      entity_id: timer.timer_badkamer_start_na_jacuzzi
+  mode: restart
+- alias: Jacuzzi - Gebruik gestopt
+  id: jacuzzi_gebruik_gestopt
+  description: Start de licht-uit-timer zodra de Jacuzzi niet meer actief is.
+  trigger:
+  - platform: state
+    entity_id: light.hoefijzer_light
     to: 'off'
   condition:
   - condition: state
-    entity_id: switch.shelly_licht_tuin_switch_0
-    state: 'on'
-  - condition: state
-    entity_id: fan.hoefijzer_pump_1
-    state: 'off'
-  - condition: state
-    entity_id: fan.hoefijzer_pump_2
+    entity_id: light.hoefijzer_light
     state: 'off'
   action:
   - service: timer.start
@@ -582,25 +612,21 @@
       entity_id: timer.timer_tuinlicht_jacuzzi
   condition:
   - condition: state
-    entity_id: fan.hoefijzer_pump_1
-    state: 'off'
-  - condition: state
-    entity_id: fan.hoefijzer_pump_2
+    entity_id: light.hoefijzer_light
     state: 'off'
   action:
   - service: switch.turn_off
     target:
       entity_id: switch.shelly_licht_tuin_switch_0
   mode: single
-- alias: Handdoekradiator badkamer aan na Jacuzzi
-  id: handdoekradiator_badkamer_aan_na_jacuzzi
-  description: Warm the bathroom towel rack for 30 minutes after the jacuzzi has been
-    used.
+- alias: Badkamerverwarming aan na 15 minuten Jacuzzi
+  id: badkamerverwarming_aan_na_15_minuten_jacuzzi
+  description: Zet de badkamerplug 15 minuten na de start van het Jacuzzi-gebruik aan.
   trigger:
-  - platform: state
-    entity_id: binary_sensor.hoefijzer_spa_in_use
-    from: 'on'
-    to: 'off'
+  - platform: event
+    event_type: timer.finished
+    event_data:
+      entity_id: timer.timer_badkamer_start_na_jacuzzi
   action:
   - service: switch.turn_on
     target:
@@ -611,14 +637,31 @@
   mode: restart
 - alias: Handdoekradiator badkamer uit na timer
   id: handdoekradiator_badkamer_uit_na_timer
-  description: Turn off the bathroom towel rack when the 30-minute post-jacuzzi timer
-    finishes.
+  description: Zet de badkamerplug na 15 minuten uit.
   trigger:
   - platform: event
     event_type: timer.finished
     event_data:
       entity_id: timer.timer_handdoekradiator_badkamer
   action:
+  - service: switch.turn_off
+    target:
+      entity_id: switch.plug_badkamer
+  mode: single
+- alias: Badkamerverwarming veilig na herstart
+  id: badkamerverwarming_veilig_na_herstart
+  description: Zet de badkamerplug uit als zijn timer tijdens een herstart is verlopen.
+  trigger:
+  - platform: homeassistant
+    event: start
+  action:
+  - delay: 00:00:30
+  - condition: state
+    entity_id: switch.plug_badkamer
+    state: 'on'
+  - condition: state
+    entity_id: timer.timer_handdoekradiator_badkamer
+    state: idle
   - service: switch.turn_off
     target:
       entity_id: switch.plug_badkamer

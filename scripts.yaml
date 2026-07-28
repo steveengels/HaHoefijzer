@@ -20,6 +20,51 @@ set_ev_charger_current:
     data:
       value: '{{ safe_amps }}'
 
+start_airco_cycle:
+  alias: Start airco koelcyclus
+  description: Stel een airco in op koelen en start de bijbehorende uitschakeltimer.
+  mode: parallel
+  max: 3
+  fields:
+    climate_entity:
+      name: Airco
+      required: true
+      selector:
+        entity:
+          domain: climate
+    timer_entity:
+      name: Timer
+      required: true
+      selector:
+        entity:
+          domain: timer
+    target_temperature:
+      name: Doeltemperatuur
+      required: true
+      selector:
+        number:
+          min: 16
+          max: 30
+          step: 1
+          unit_of_measurement: "°C"
+    runtime:
+      name: Looptijd
+      required: true
+      selector:
+        text:
+  sequence:
+  - service: climate.set_temperature
+    target:
+      entity_id: '{{ climate_entity }}'
+    data:
+      temperature: '{{ target_temperature | int }}'
+      hvac_mode: cool
+  - service: timer.start
+    target:
+      entity_id: '{{ timer_entity }}'
+    data:
+      duration: '{{ runtime }}'
+
 play_radio_minerva_hobbyruimte:
   alias: Speel Radio Minerva in hobbyruimte
   icon: mdi:radio
