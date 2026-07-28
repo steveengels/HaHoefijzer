@@ -162,15 +162,6 @@ sensor:
         window_size: "00:02"
         precision: 0
 
-lovelace:
-  dashboards:
-    hoefijzer-dashboard:
-      mode: yaml
-      title: Hoefijzer
-      icon: mdi:home-lightning-bolt
-      show_in_sidebar: true
-      filename: dashboards/hoefijzer.yaml
-
 input_boolean:
   alexa_living_room_lights:
     name: Alexa living room lights
